@@ -15,7 +15,7 @@ const nextConfig = {
   },
   // Remove standalone output for local builds to avoid Windows symlink permission issues
   // Vercel will handle this automatically in production
-  output: 'standalone',
+  // output: 'standalone',
   // Configure how Next.js handles external data fetching during build
   // This helps with MongoDB connections during build
   serverExternalPackages: ['mongoose'],
