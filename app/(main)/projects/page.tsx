@@ -22,12 +22,9 @@ import { projects as staticProjects } from "@/lib/data";
 
 async function getProjects() {
   try {
-    // Use absolute URL to avoid URL parsing errors
-    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-    const host = process.env.VERCEL_URL || 'localhost:3000';
-    const baseUrl = `${protocol}://${host}`;
-    
-    const res = await fetch(`${baseUrl}/api/projects`, {
+    // Use a relative URL for API requests to avoid URL parsing errors in different environments
+    // This works in both development and production (Vercel) environments
+    const res = await fetch('/api/projects', {
       // Use next.revalidate instead of cache: 'no-store' to enable static rendering
       // with periodic revalidation (e.g., every 3600 seconds / 1 hour)
       next: { revalidate: 3600 }
@@ -37,10 +34,23 @@ async function getProjects() {
       throw new Error('Failed to fetch projects');
     }
     
-    return res.json();
+    const projects = await res.json();
+    
+    // If the API returns an empty array (which can happen during build time),
+    // use the static fallback data instead
+    if (!projects || projects.length === 0 || Array.isArray(projects) && projects.length === 0) {
+      console.log('API returned empty projects array, using static fallback data');
+      return staticProjects.map(project => ({
+        ...project,
+        icon: project.icon.name // Convert icon component to string name
+      }));
+    }
+    
+    return projects;
   } catch (error) {
     console.error('Error loading projects:', error);
     // Return static project data as fallback when API fetch fails
+    // This ensures the page can be built even if the API request fails
     return staticProjects.map(project => ({
       ...project,
       icon: project.icon.name // Convert icon component to string name

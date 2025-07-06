@@ -7,10 +7,20 @@ import { authOptions } from '@/lib/auth';
 // GET all projects
 export async function GET() {
   try {
-    await connectToDatabase();
+    // Connect to database and handle case where connection might be null during build
+    const connection = await connectToDatabase();
+    
+    // If connection is null (which can happen during static builds), return an empty array
+    // This allows the static fallback in the projects page to work
+    if (!connection) {
+      console.warn('Database connection not available, returning empty projects array');
+      return NextResponse.json([]);
+    }
+    
     const projects = await Project.find({}).sort({ createdAt: -1 });
     return NextResponse.json(projects);
   } catch (error) {
+    console.error('Error fetching projects:', error);
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
   }
 }
