@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 export default function LoadingIndicator() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -26,10 +25,10 @@ export default function LoadingIndicator() {
     };
   }, []);
 
-  // Listen for pathname and search params changes
+  // Listen for pathname changes
   useEffect(() => {
     setIsLoading(false);
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   if (!isLoading) return null;
 

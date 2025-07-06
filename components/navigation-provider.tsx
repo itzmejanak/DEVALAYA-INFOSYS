@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, Suspense } from 'react';
 
 type NavigationContextType = {
   isNavigating: boolean;
@@ -15,10 +15,10 @@ export function useNavigation() {
   return useContext(NavigationContext);
 }
 
-export function NavigationProvider({ children }: { children: React.ReactNode }) {
+// Create a separate component that uses useSearchParams
+function NavigationWatcher({ setIsNavigating }: { setIsNavigating: (value: boolean) => void }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isNavigating, setIsNavigating] = useState(false);
   const [prevPathname, setPrevPathname] = useState<string | null>(null);
 
   useEffect(() => {
@@ -40,21 +40,30 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
 
       return () => clearTimeout(timer);
     }
-  }, [pathname, prevPathname]);
+  }, [pathname, prevPathname, setIsNavigating]);
 
   // Also reset when search params change
   useEffect(() => {
-    if (isNavigating) {
+    if (searchParams.toString() !== '') {
       const timer = setTimeout(() => {
         setIsNavigating(false);
       }, 800);
 
       return () => clearTimeout(timer);
     }
-  }, [searchParams, isNavigating]);
+  }, [searchParams, setIsNavigating]);
+
+  return null;
+}
+
+export function NavigationProvider({ children }: { children: React.ReactNode }) {
+  const [isNavigating, setIsNavigating] = useState(false);
 
   return (
     <NavigationContext.Provider value={{ isNavigating }}>
+      <Suspense fallback={null}>
+        <NavigationWatcher setIsNavigating={setIsNavigating} />
+      </Suspense>
       {children}
     </NavigationContext.Provider>
   );
