@@ -14,10 +14,7 @@ const getBaseUrl = () => {
   if (typeof window === 'undefined') {
     // Vercel deployment
     if (process.env.VERCEL_URL) {
-      // Check if VERCEL_URL already includes the protocol
-      return process.env.VERCEL_URL.startsWith('http') 
-        ? process.env.VERCEL_URL 
-        : `https://${process.env.VERCEL_URL}`;
+      return `https://${process.env.VERCEL_URL}`;
     }
     // Custom deployment URL
     if (process.env.NEXT_PUBLIC_SITE_URL) {
