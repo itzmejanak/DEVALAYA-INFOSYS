@@ -1,10 +1,29 @@
-import React from "react"
+'use client';
+
+import React, { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Code, ExternalLink, ChevronRight, Globe, Database, Shield, Cpu } from "lucide-react"
 import { projectsHero } from "@/lib/data"
 import { cn } from "@/lib/utils"
-import { fetchProjects, type Project } from "@/lib/services/projects"
+import { useToast } from "@/hooks/use-toast"
+
+interface Project {
+  _id?: string;
+  title: string;
+  category: string;
+  image: string;
+  description: string;
+  technologies: string[];
+  icon: string;
+  client: string;
+  duration: string;
+  year: string;
+  featured: boolean;
+  link: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 
 // Function to get the icon component based on the icon name string
 const getIconComponent = (iconName: string) => {
@@ -13,29 +32,66 @@ const getIconComponent = (iconName: string) => {
     Globe,
     Database,
     Shield,
-    Cpu
+    Cpu,
+    ExternalLink,
+    ChevronRight
   };
   return iconMap[iconName] || Code;
 };
 
-/**
- * Get projects data with error handling and fallback
- * This function is used by the page component to fetch projects
- */
-async function getProjects(): Promise<Project[]> {
-  try {
-    // Use the projects service to fetch data with proper error handling and fallbacks
-    return await fetchProjects();
-  } catch (error) {
-    // This should never happen as fetchProjects already has error handling,
-    // but we add this as an extra safety measure
-    console.error('Unexpected error loading projects:', error);
-    return [];
-  }
-}
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+  
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('/api/projects');
+        if (!response.ok) {
+          throw new Error('Failed to fetch projects');
+        }
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to load projects',
+          variant: 'destructive',
+        });
+        // Try to load from static data in case of error
+        try {
+          const staticResponse = await fetch('/api/projects?static=true');
+          if (staticResponse.ok) {
+            const staticData = await staticResponse.json();
+            setProjects(staticData);
+          }
+        } catch (e) {
+          console.error('Failed to load static projects data:', e);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-export default async function ProjectsPage() {
-  const projects = await getProjects();
+    fetchProjects();
+  }, [toast]);
+
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-gold border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          <p className="mt-4 text-navy">Loading projects...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const featuredProjects = projects.filter((project) => project.featured);
+  const nonFeaturedProjects = projects.filter((project) => !project.featured);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -52,7 +108,10 @@ export default async function ProjectsPage() {
             {projectsHero.title.split(" ").map((word, index, array) => (
               <React.Fragment key={index}>
                 {index === array.length - 1 ? (
-                  <span className="text-gold relative inline-block">{word}<span className="absolute -bottom-2 left-0 w-full h-1 bg-gold rounded-full"></span></span>
+                  <span className="text-gold relative inline-block">
+                    {word}
+                    <span className="absolute -bottom-2 left-0 w-full h-1 bg-gold rounded-full"></span>
+                  </span>
                 ) : (
                   <>{word} </>
                 )}
@@ -78,74 +137,93 @@ export default async function ProjectsPage() {
               <Code className="h-4 w-4 mr-2 text-gold" />
               <span>Featured Work</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-navy mb-6 tracking-tight">Our <span className="relative inline-block">Flagship<span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-gold rounded-full"></span></span> Projects</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-navy mb-6 tracking-tight">
+              Our <span className="relative inline-block">
+                Flagship
+                <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-gold rounded-full"></span>
+              </span> Projects
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Innovative solutions that showcase our expertise and commitment to excellence
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            {projects.filter((project: any) => project.featured).map((project: any, index: number) => (
-              <Card 
-                key={index} 
-                className={cn(
-                  "group overflow-hidden hover:shadow-xl transition-all duration-500 border-0 shadow-lg bg-white",
-                  "transform hover:-translate-y-2"
-                )}
-              >
-                <div className="relative">
-                  <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-cream to-white">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </div>
-                  <div className="absolute top-4 right-4 bg-navy/80 text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur-sm">
-                    {project.category}
-                  </div>
-                </div>
-                
-                <CardContent className="p-8">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 className="text-2xl font-bold text-navy group-hover:text-gold transition-colors duration-300">{project.title}</h3>
-                      <p className="text-gold/80 font-medium text-sm mt-1">{project.client} • {project.year}</p>
+          {projects.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No projects available at the moment. Check back soon!</p>
+            </div>
+          ) : featuredProjects.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No featured projects available at the moment.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+              {featuredProjects.map((project, index) => (
+                <Card 
+                  key={project._id || index} 
+                  className={cn(
+                    "group overflow-hidden hover:shadow-xl transition-all duration-500 border-0 shadow-lg bg-white",
+                    "transform hover:-translate-y-2"
+                  )}
+                >
+                  <div className="relative">
+                    <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-cream to-white">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
                     </div>
-                    <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-300">
-                      {React.createElement(getIconComponent(project.icon), { className: "h-6 w-6 text-gold" })}
+                    <div className="absolute top-4 right-4 bg-navy/80 text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur-sm">
+                      {project.category}
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 mb-6 line-clamp-3">{project.description}</p>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.technologies.map((tech: string, techIndex: number) => (
-                      <Badge
-                        key={techIndex}
-                        variant="secondary"
-                        className="bg-navy/5 text-navy hover:bg-navy/10 transition-colors duration-300 border-0"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
-                    <div className="text-sm text-gray-500">
-                      <span className="font-medium">{project.duration}</span> duration
+                  <CardContent className="p-8">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-2xl font-bold text-navy group-hover:text-gold transition-colors duration-300">
+                          {project.title}
+                        </h3>
+                        <p className="text-gold/80 font-medium text-sm mt-1">
+                          {project.client} • {project.year}
+                        </p>
+                      </div>
+                      <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-300">
+                        {React.createElement(getIconComponent(project.icon), { className: "h-6 w-6 text-gold" })}
+                      </div>
                     </div>
-                    <a 
-                      href={project.link} 
-                      className="text-gold font-medium flex items-center text-sm hover:underline"
-                    >
-                      View Project <ChevronRight className="h-4 w-4 ml-1" />
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    
+                    <p className="text-gray-600 mb-6 line-clamp-3">{project.description}</p>
+
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {project.technologies.map((tech: string, techIndex: number) => (
+                        <Badge
+                          key={techIndex}
+                          variant="secondary"
+                          className="bg-navy/5 text-navy hover:bg-navy/10 transition-colors duration-300 border-0"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
+                      <div className="text-sm text-gray-500">
+                        <span className="font-medium">{project.duration}</span> duration
+                      </div>
+                      <a 
+                        href={project.link} 
+                        className="text-gold font-medium flex items-center text-sm hover:underline"
+                      >
+                        View Project <ChevronRight className="h-4 w-4 ml-1" />
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -161,79 +239,94 @@ export default async function ProjectsPage() {
               <Code className="h-4 w-4 mr-2 text-gold" />
               <span>Portfolio</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-navy mb-6 tracking-tight">More <span className="relative inline-block">Projects<span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-gold rounded-full"></span></span></h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-navy mb-6 tracking-tight">
+              More <span className="relative inline-block">
+                Projects
+                <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-gold rounded-full"></span>
+              </span>
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Explore our diverse range of successful client projects
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.filter((project: any) => !project.featured).map((project: any, index: number) => (
-              <Card 
-                key={index} 
-                className="group overflow-hidden hover:shadow-lg transition-all duration-500 border-0 shadow-md bg-white transform hover:-translate-y-1"
-              >
-                <div className="relative">
-                  <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-cream to-white">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </div>
-                  <div className="absolute top-3 right-3 bg-navy/80 text-white text-xs font-medium px-2 py-0.5 rounded-full backdrop-blur-sm">
-                    {project.category}
-                  </div>
-                </div>
-                
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="text-xl font-bold text-navy group-hover:text-gold transition-colors duration-300">{project.title}</h3>
-                      <p className="text-gold/80 font-medium text-xs mt-0.5">{project.client} • {project.year}</p>
+          {nonFeaturedProjects.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No additional projects available at the moment.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {nonFeaturedProjects.map((project, index) => (
+                <Card 
+                  key={project._id || index} 
+                  className="group overflow-hidden hover:shadow-lg transition-all duration-500 border-0 shadow-md bg-white transform hover:-translate-y-1"
+                >
+                  <div className="relative">
+                    <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-cream to-white">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
                     </div>
-                    <div className="w-10 h-10 bg-navy/5 rounded-full flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-300">
-                      {React.createElement(getIconComponent(project.icon), { className: "h-5 w-5 text-gold" })}
+                    <div className="absolute top-3 right-3 bg-navy/80 text-white text-xs font-medium px-2 py-0.5 rounded-full backdrop-blur-sm">
+                      {project.category}
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.technologies.slice(0, 3).map((tech: string, techIndex: number) => (
-                      <Badge
-                        key={techIndex}
-                        variant="secondary"
-                        className="bg-navy/5 text-navy hover:bg-navy/10 transition-colors duration-300 border-0 text-xs py-0.5"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <Badge
-                        variant="secondary"
-                        className="bg-navy/5 text-navy hover:bg-navy/10 transition-colors duration-300 border-0 text-xs py-0.5"
-                      >
-                        +{project.technologies.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-
-                  <div className="pt-3 border-t border-gray-100 flex justify-between items-center">
-                    <div className="text-xs text-gray-500">
-                      <span className="font-medium">{project.duration}</span>
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h3 className="text-xl font-bold text-navy group-hover:text-gold transition-colors duration-300">
+                          {project.title}
+                        </h3>
+                        <p className="text-gold/80 font-medium text-xs mt-0.5">
+                          {project.client} • {project.year}
+                        </p>
+                      </div>
+                      <div className="w-10 h-10 bg-navy/5 rounded-full flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-300">
+                        {React.createElement(getIconComponent(project.icon), { className: "h-5 w-5 text-gold" })}
+                      </div>
                     </div>
-                    <a 
-                      href={project.link} 
-                      className="text-gold font-medium flex items-center text-xs hover:underline"
-                    >
-                      Details <ChevronRight className="h-3 w-3 ml-1" />
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
+
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.technologies.slice(0, 3).map((tech: string, techIndex: number) => (
+                        <Badge
+                          key={techIndex}
+                          variant="secondary"
+                          className="bg-navy/5 text-navy hover:bg-navy/10 transition-colors duration-300 border-0 text-xs py-0.5"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <Badge
+                          variant="secondary"
+                          className="bg-navy/5 text-navy hover:bg-navy/10 transition-colors duration-300 border-0 text-xs py-0.5"
+                        >
+                          +{project.technologies.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+
+                    <div className="pt-3 border-t border-gray-100 flex justify-between items-center">
+                      <div className="text-xs text-gray-500">
+                        <span className="font-medium">{project.duration}</span>
+                      </div>
+                      <a 
+                        href={project.link} 
+                        className="text-gold font-medium flex items-center text-xs hover:underline"
+                      >
+                        Details <ChevronRight className="h-3 w-3 ml-1" />
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -246,7 +339,9 @@ export default async function ProjectsPage() {
           </div>
           
           <div className="relative z-10 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Start Your <span className="text-gold">Next Project</span>?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Ready to Start Your <span className="text-gold">Next Project</span>?
+            </h2>
             <p className="text-xl text-white/80 mb-10 max-w-3xl mx-auto">
               Let's collaborate to bring your vision to life with innovative technology solutions tailored to your business needs.
             </p>
