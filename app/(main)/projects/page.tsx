@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Code, ExternalLink, ChevronRight, Globe, Database, Shield, Cpu } from "lucide-react"
 import { projectsHero } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import { fetchProjects, type Project } from "@/lib/services/projects"
 
 // Function to get the icon component based on the icon name string
 const getIconComponent = (iconName: string) => {
@@ -17,44 +18,19 @@ const getIconComponent = (iconName: string) => {
   return iconMap[iconName] || Code;
 };
 
-// Import static project data as fallback
-import { projects as staticProjects } from "@/lib/data";
-
-async function getProjects() {
+/**
+ * Get projects data with error handling and fallback
+ * This function is used by the page component to fetch projects
+ */
+async function getProjects(): Promise<Project[]> {
   try {
-    // Use a relative URL for API requests to avoid URL parsing errors in different environments
-    // This works in both development and production (Vercel) environments
-    const res = await fetch('/api/projects', {
-      // Use next.revalidate instead of cache: 'no-store' to enable static rendering
-      // with periodic revalidation (e.g., every 3600 seconds / 1 hour)
-      next: { revalidate: 3600 }
-    });
-    
-    if (!res.ok) {
-      throw new Error('Failed to fetch projects');
-    }
-    
-    const projects = await res.json();
-    
-    // If the API returns an empty array (which can happen during build time),
-    // use the static fallback data instead
-    if (!projects || projects.length === 0 || Array.isArray(projects) && projects.length === 0) {
-      console.log('API returned empty projects array, using static fallback data');
-      return staticProjects.map(project => ({
-        ...project,
-        icon: project.icon.name // Convert icon component to string name
-      }));
-    }
-    
-    return projects;
+    // Use the projects service to fetch data with proper error handling and fallbacks
+    return await fetchProjects();
   } catch (error) {
-    console.error('Error loading projects:', error);
-    // Return static project data as fallback when API fetch fails
-    // This ensures the page can be built even if the API request fails
-    return staticProjects.map(project => ({
-      ...project,
-      icon: project.icon.name // Convert icon component to string name
-    }));
+    // This should never happen as fetchProjects already has error handling,
+    // but we add this as an extra safety measure
+    console.error('Unexpected error loading projects:', error);
+    return [];
   }
 }
 
