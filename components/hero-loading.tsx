@@ -2,11 +2,35 @@
 
 import Image from 'next/image';
 import { useNavigation } from './navigation-provider';
+import { useEffect, useState } from 'react';
 
 export default function HeroLoading() {
   const { isNavigating } = useNavigation();
-
-  if (!isNavigating) return null;
+  const [showLoading, setShowLoading] = useState(false);
+  
+  // Use effect to handle the loading state with a safety timeout
+  useEffect(() => {
+    if (isNavigating) {
+      // Show loading immediately when navigation starts
+      setShowLoading(true);
+      
+      // Safety timeout to ensure loading doesn't get stuck
+      const safetyTimer = setTimeout(() => {
+        setShowLoading(false);
+      }, 5000); // Force hide after 3 seconds max
+      
+      return () => clearTimeout(safetyTimer);
+    } else {
+      // Add a small delay before hiding to ensure the loading is visible
+      const hideTimer = setTimeout(() => {
+        setShowLoading(false);
+      }, 1000); // Short delay to ensure loading is visible
+      
+      return () => clearTimeout(hideTimer);
+    }
+  }, [isNavigating]);
+  
+  if (!showLoading) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm transition-all duration-300 animate-in fade-in-50">

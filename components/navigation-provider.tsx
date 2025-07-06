@@ -33,24 +33,28 @@ function NavigationWatcher({ setIsNavigating }: { setIsNavigating: (value: boole
       setIsNavigating(true);
       setPrevPathname(pathname);
 
-      // Hide loading after a short delay to ensure the animation is visible
+      // Hide loading after a delay to ensure the animation is visible
       const timer = setTimeout(() => {
         setIsNavigating(false);
-      }, 800); // Adjust timing as needed
+      }, 1200); // Increased timing for better visibility
 
       return () => clearTimeout(timer);
+    } else {
+      // Ensure loading state is reset even if pathname didn't change
+      setIsNavigating(false);
     }
   }, [pathname, prevPathname, setIsNavigating]);
 
   // Also reset when search params change
   useEffect(() => {
-    if (searchParams.toString() !== '') {
-      const timer = setTimeout(() => {
-        setIsNavigating(false);
-      }, 800);
+    // When search params change, show loading briefly then reset
+    setIsNavigating(true);
+    
+    const timer = setTimeout(() => {
+      setIsNavigating(false);
+    }, 800);
 
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, [searchParams, setIsNavigating]);
 
   return null;
@@ -58,6 +62,14 @@ function NavigationWatcher({ setIsNavigating }: { setIsNavigating: (value: boole
 
 export function NavigationProvider({ children }: { children: React.ReactNode }) {
   const [isNavigating, setIsNavigating] = useState(false);
+
+  // Ensure loading state is reset when component unmounts
+  useEffect(() => {
+    return () => {
+      // Cleanup function to reset loading state
+      setIsNavigating(false);
+    };
+  }, []);
 
   return (
     <NavigationContext.Provider value={{ isNavigating }}>

@@ -79,7 +79,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 md:h-20">
           {/* Logo - Using image */}
-          <Link href="/" className="flex items-center group" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
+          <Link href="/" className="flex items-center group">
             <div className="relative w-auto h-12 group-hover:scale-105 transition-transform duration-200">
               <Image 
                 src="/logo.png" 

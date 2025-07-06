@@ -9,6 +9,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Add experimental features for better page transitions
+  experimental: {
+    scrollRestoration: true,
+  },
   // Remove standalone output for local builds to avoid Windows symlink permission issues
   // Vercel will handle this automatically in production
   // output: 'standalone',
