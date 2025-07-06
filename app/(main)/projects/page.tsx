@@ -25,7 +25,9 @@ async function getProjects() {
     const baseUrl = `${protocol}://${host}`;
     
     const res = await fetch(`${baseUrl}/api/projects`, {
-      cache: 'no-store'
+      // Use next.revalidate instead of cache: 'no-store' to enable static rendering
+      // with periodic revalidation (e.g., every 3600 seconds / 1 hour)
+      next: { revalidate: 3600 }
     });
     
     if (!res.ok) {
