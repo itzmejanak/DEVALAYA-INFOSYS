@@ -9,13 +9,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Set output to standalone for better Vercel deployment
-  output: 'standalone',
+  // Remove standalone output for local builds to avoid Windows symlink permission issues
+  // Vercel will handle this automatically in production
+  // output: 'standalone',
   // Configure how Next.js handles external data fetching during build
-  experimental: {
-    // This helps with MongoDB connections during build
-    serverComponentsExternalPackages: ['mongoose']
-  },
+  // This helps with MongoDB connections during build
+  serverExternalPackages: ['mongoose'],
 }
 
 export default nextConfig
