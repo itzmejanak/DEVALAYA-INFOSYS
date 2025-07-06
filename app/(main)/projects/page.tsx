@@ -17,6 +17,9 @@ const getIconComponent = (iconName: string) => {
   return iconMap[iconName] || Code;
 };
 
+// Import static project data as fallback
+import { projects as staticProjects } from "@/lib/data";
+
 async function getProjects() {
   try {
     // Use absolute URL to avoid URL parsing errors
@@ -37,7 +40,11 @@ async function getProjects() {
     return res.json();
   } catch (error) {
     console.error('Error loading projects:', error);
-    return [];
+    // Return static project data as fallback when API fetch fails
+    return staticProjects.map(project => ({
+      ...project,
+      icon: project.icon.name // Convert icon component to string name
+    }));
   }
 }
 
