@@ -8,7 +8,7 @@ import { ArrowRight, Star, ChevronRight, ExternalLink, Code, Briefcase, Cpu, Lin
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 import { services } from '@/lib/services-data';
 import { companyStats } from '@/lib/data';
 import { IProject } from '@/models/Project';
@@ -92,8 +92,8 @@ const Hero = () => {
           </Badge>
           
           {/* Refined heading with better typography and spacing */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-8 tracking-tight leading-tight">
-            <span className="block mb-3 text-white drop-shadow-lg">Transforming Concepts into</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 sm:mb-8 tracking-tight leading-tight">
+            <span className="block mb-2 sm:mb-3 text-white drop-shadow-lg">Transforming Concepts into</span>
             <span className="text-gold bg-gradient-to-r from-gold via-gold/90 to-gold/80 bg-clip-text text-transparent drop-shadow-sm">
               Seamless Experiences
             </span>
@@ -103,29 +103,29 @@ const Hero = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-gold to-gold/60 mx-auto mb-8 rounded-full shadow-lg"></div>
           
           {/* Refined description with better typography */}
-          <p className="text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed mb-10">
+          <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed mb-6 sm:mb-10 px-2">
             We build innovative digital solutions that help businesses thrive in the modern world
           </p>
           
           {/* Refined button group with better styling */}
-          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-navy font-semibold group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 shadow-xl shadow-gold/20 px-8 py-6 rounded-full text-base"
+              className="w-full sm:w-auto bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-navy font-semibold group transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 shadow-xl shadow-gold/20 px-6 sm:px-8 py-4 sm:py-6 rounded-full text-sm sm:text-base"
               onClick={scrollToServices}
             >
               Explore Services
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
             
-            <Link href="/projects" passHref>
+            <Link href="/projects" passHref className="w-full sm:w-auto">
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-white/20 text-gold bg-white/5 hover:bg-white hover:text-navy transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 backdrop-blur-sm shadow-xl px-8 py-6 rounded-full group text-base"
+                className="w-full sm:w-auto border-2 border-white/20 text-gold bg-white/5 hover:bg-white hover:text-navy transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 backdrop-blur-sm shadow-xl px-6 sm:px-8 py-4 sm:py-6 rounded-full group text-sm sm:text-base"
               >
                 View Our Work
-                <ArrowUpRight className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                <ArrowUpRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
               </Button>
             </Link>
           </div>
@@ -156,7 +156,7 @@ const ServicesSection = () => {
   const [expandedCards, setExpandedCards] = useState(new Set());
   
   return (
-    <section id="services-section" className="py-20 px-4 sm:px-6 lg:px-8 bg-cream relative overflow-hidden">
+    <section id="services-section" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-cream relative overflow-hidden">
       {/* Subtle background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-gold/5 to-transparent rounded-full blur-3xl"></div>
@@ -170,22 +170,22 @@ const ServicesSection = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeIn}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
           <Badge 
             variant="outline" 
-            className="mb-6 px-4 py-2 text-navy border-navy/30 bg-white/50 backdrop-blur-sm text-sm font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            className="mb-4 sm:mb-6 px-3 sm:px-4 py-1.5 sm:py-2 text-navy border-navy/30 bg-white/50 backdrop-blur-sm text-xs sm:text-sm font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
           >
             ⚡ What We Offer
           </Badge>
           
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-navy">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4 text-navy">
             Our <span className="text-gold">Services</span>
           </h2>
           
-          <div className="w-24 h-1 bg-gradient-to-r from-gold to-gold/60 mx-auto mb-6 rounded-full shadow-lg shadow-gold/30"></div>
+          <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-gold to-gold/60 mx-auto mb-4 sm:mb-6 rounded-full shadow-lg shadow-gold/30"></div>
           
-          <p className="text-lg text-navy/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-navy/70 max-w-2xl mx-auto px-2">
             Comprehensive solutions tailored to your business needs
           </p>
         </motion.div>
@@ -195,7 +195,7 @@ const ServicesSection = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
           {displayedServices.map((service, index) => {
             const Icon = service.icon;
@@ -227,7 +227,7 @@ const ServicesSection = () => {
                     </div>
                   </CardContent>
                   
-                  <CardFooter className="relative z-10 pt-0">
+                  <CardFooter className="relative z-10 pt-0 flex justify-between">
                     <Button 
                       variant="ghost" 
                       className="p-3 text-gold hover:text-white transition-all duration-300 font-medium text-sm"
@@ -236,6 +236,18 @@ const ServicesSection = () => {
                       {isExpanded ? 'Show less' : 'Learn more'}
                       <ChevronRight className={`ml-1 h-3 w-3 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`} />
                     </Button>
+                    
+                    {isExpanded && (
+                      <Link href={`/services/${service.slug}`} passHref>
+                        <Button 
+                          variant="outline" 
+                          className="p-3 text-navy border-navy/30 hover:bg-navy hover:text-white transition-all duration-300 font-medium text-sm"
+                        >
+                          Details
+                          <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform duration-300" />
+                        </Button>
+                      </Link>
+                    )}
                   </CardFooter>
                 </Card>
               </motion.div>
@@ -244,7 +256,7 @@ const ServicesSection = () => {
         </motion.div>
         
         <div className="text-center mt-12">
-          <Link href="/#services-section" passHref>
+          <Link href="/services" passHref>
             <Button variant="outline" className="border-2 border-navy/20 text-navy hover:bg-navy hover:text-white transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 shadow-lg hover:shadow-xl px-6 py-3 rounded-full group">
               View All Services
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />

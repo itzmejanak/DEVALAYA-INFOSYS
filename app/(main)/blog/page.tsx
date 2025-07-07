@@ -73,7 +73,7 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-secondary/30 to-white">
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-secondary/30 to-white">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute left-0 top-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         </div>
@@ -82,17 +82,17 @@ export default function BlogPage() {
         <div className="absolute left-0 bottom-1/4 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
         
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center justify-center mb-6 bg-primary/5 px-4 py-2 rounded-full text-primary font-medium">
-            <BookOpen className="h-4 w-4 mr-2 text-accent" />
+          <div className="inline-flex items-center justify-center mb-4 sm:mb-6 bg-primary/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-primary font-medium text-xs sm:text-sm">
+            <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2 text-accent" />
             <span>{blogHero.subtitle}</span>
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 text-primary tracking-tight">
-            {blogHero.title.split(" ")[0]} <span className="text-accent relative inline-block">{blogHero.title.split(" ")[1]}<span className="absolute -bottom-2 left-0 w-full h-1 bg-accent rounded-full"></span></span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 text-primary tracking-tight">
+            {blogHero.title.split(" ")[0]} <span className="text-accent relative inline-block">{blogHero.title.split(" ")[1]}<span className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-accent rounded-full"></span></span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-2">
             {blogHero.description}
           </p>
-          <div className="w-32 h-1 bg-gradient-to-r from-accent/30 via-accent to-accent/30 mx-auto rounded-full"></div>
+          <div className="w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-accent/30 via-accent to-accent/30 mx-auto rounded-full"></div>
         </div>
       </section>
       

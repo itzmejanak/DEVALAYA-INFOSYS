@@ -9,63 +9,63 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-cream/30 to-white">
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-cream/30 to-white">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute left-0 top-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         </div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center justify-center mb-6 bg-navy/5 px-4 py-2 rounded-full text-navy font-medium">
-            <Sparkles className="h-4 w-4 mr-2 text-gold" />
+          <div className="inline-flex items-center justify-center mb-4 sm:mb-6 bg-navy/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-navy font-medium text-xs sm:text-sm">
+            <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2 text-gold" />
             <span>{aboutHero.subtitle}</span>
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 text-black tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 text-black tracking-tight">
             {aboutHero.title.split(" ").map((word, index, array) => (
               <React.Fragment key={index}>
                 {index === array.length - 1 ? (
-                  <span className="text-gold relative inline-block">{word}<span className="absolute -bottom-2 left-0 w-full h-1 bg-gold rounded-full"></span></span>
+                  <span className="text-gold relative inline-block">{word}<span className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-gold rounded-full"></span></span>
                 ) : (
                   <>{word} </>
                 )}
               </React.Fragment>
             ))}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-2">
             {aboutHero.description}
           </p>
-          <div className="w-32 h-1 bg-gradient-to-r from-gold/30 via-gold to-gold/30 mx-auto rounded-full"></div>
+          <div className="w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-gold/30 via-gold to-gold/30 mx-auto rounded-full"></div>
         </div>
         </section>
 
       {/* Company Story */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute right-0 top-1/4 w-64 h-64 bg-navy/5 rounded-full blur-3xl"></div>
         <div className="absolute left-0 bottom-1/4 w-64 h-64 bg-gold/5 rounded-full blur-3xl"></div>
         
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             <div>
-              <div className="inline-flex items-center justify-center mb-6 bg-navy/5 px-4 py-2 rounded-full text-navy font-medium">
-                <Clock className="h-4 w-4 mr-2 text-gold" />
+              <div className="inline-flex items-center justify-center mb-4 sm:mb-6 bg-navy/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-navy font-medium text-xs sm:text-sm">
+                <Clock className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2 text-gold" />
                 <span>{companyStory.subtitle}</span>
               </div>
-              <h2 className="text-4xl md:text-6xl font-bold text-navy mb-8 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-navy mb-5 sm:mb-8 tracking-tight">
                 {companyStory.title.split(" ").map((word, index, array) => (
                   <React.Fragment key={index}>
                     {index === array.length - 1 ? (
-                      <span className="relative inline-block">{word}<span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-gold rounded-full"></span></span>
+                      <span className="relative inline-block">{word}<span className="absolute -bottom-1 sm:-bottom-2 left-0 w-1/3 h-0.5 sm:h-1 bg-gold rounded-full"></span></span>
                     ) : (
                       <>{word} </>
                     )}
                   </React.Fragment>
                 ))}
               </h2>
-              <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
+              <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-600 leading-relaxed">
                 {companyStory.paragraphs.map((paragraph, index) => {
                   const opacity = 0.8 - (index * 0.2);
                   return (
                     <p 
                       key={index} 
-                      className={`relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-gradient-to-b before:from-gold/${Math.round(opacity * 100)} before:to-${index === companyStory.paragraphs.length - 1 ? 'transparent' : `gold/${Math.round((opacity - 0.2) * 100)}`} before:rounded-full`}
+                      className={`relative pl-4 sm:pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-0.5 sm:before:w-1 before:bg-gradient-to-b before:from-gold/${Math.round(opacity * 100)} before:to-${index === companyStory.paragraphs.length - 1 ? 'transparent' : `gold/${Math.round((opacity - 0.2) * 100)}`} before:rounded-full`}
                     >
                       {paragraph}
                     </p>
@@ -73,15 +73,15 @@ export default function AboutPage() {
                 })}
               </div>
             </div>
-            <div className="bg-gradient-to-br from-cream to-white p-10 rounded-3xl shadow-xl border border-gold/10 transform hover:scale-[1.02] transition-all duration-500">
-              <div className="grid grid-cols-2 gap-10">
+            <div className="bg-gradient-to-br from-cream to-white p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl border border-gold/10 transform hover:scale-[1.02] transition-all duration-500 mt-8 lg:mt-0">
+              <div className="grid grid-cols-2 gap-5 sm:gap-8 md:gap-10">
                 {companyStats.stats.map((stat, index) => (
                   <div key={index} className="text-center group cursor-pointer transform transition-all duration-300 hover:-translate-y-1">
-                    <div className="w-16 h-16 bg-navy/5 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-navy/10 transition-colors duration-300">
-                      {React.createElement(stat.icon, { className: "h-8 w-8 text-gold" })}
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-navy/5 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-navy/10 transition-colors duration-300">
+                      {React.createElement(stat.icon, { className: "h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-gold" })}
                     </div>
-                    <div className="text-4xl font-bold text-gold mb-2 group-hover:scale-110 transition-transform duration-300">{stat.value}</div>
-                    <div className="text-navy/70 font-medium">{stat.label}</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gold mb-1 sm:mb-2 group-hover:scale-110 transition-transform duration-300">{stat.value}</div>
+                    <div className="text-sm sm:text-base text-navy/70 font-medium">{stat.label}</div>
                   </div>
                 ))}
               </div>

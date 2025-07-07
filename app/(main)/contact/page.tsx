@@ -35,7 +35,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-secondary/30 to-white">
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-secondary/30 to-white">
        <div className="absolute inset-0 overflow-hidden">
           <div className="absolute left-0 top-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         </div>
@@ -45,47 +45,47 @@ export default function ContactPage() {
         
    
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center justify-center mb-6 bg-primary/5 px-4 py-2 rounded-full text-primary font-medium">
-            <HeartHandshake className="h-4 w-4 mr-2 text-accent" />
+          <div className="inline-flex items-center justify-center mb-4 sm:mb-6 bg-primary/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-primary font-medium text-xs sm:text-sm">
+            <HeartHandshake className="h-3 w-3 sm:h-4 sm:w-4 mr-1.5 sm:mr-2 text-accent" />
             <span>{contactHero.subtitle}</span>
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 text-primary tracking-tight">
-            {contactHero.title.split(" ")[0]} <span className="text-accent relative inline-block">{contactHero.title.split(" ")[1]}<span className="absolute -bottom-2 left-0 w-full h-1 bg-accent rounded-full"></span></span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 text-primary tracking-tight">
+            {contactHero.title.split(" ")[0]} <span className="text-accent relative inline-block">{contactHero.title.split(" ")[1]}<span className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-accent rounded-full"></span></span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-2">
             {contactHero.description}
           </p>
-          <div className="w-32 h-1 bg-gradient-to-r from-accent/30 via-accent to-accent/30 mx-auto rounded-full"></div>
+          <div className="w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-accent/30 via-accent to-accent/30 mx-auto rounded-full"></div>
         </div>
       </section>
       
       {/* Main Content */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 relative">
+      <section className="py-10 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 relative">
         <div className="absolute left-0 top-1/3 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute right-0 bottom-1/3 w-72 h-72 bg-accent/5 rounded-full blur-3xl"></div>
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Contact Form */}
             <div className="lg:col-span-2 flex flex-col h-full">
-              <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-500 bg-white transform hover:-translate-y-1 rounded-2xl h-full flex flex-col">
+              <Card className="border-0 shadow-xl sm:shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-500 bg-white transform hover:-translate-y-1 rounded-xl sm:rounded-2xl h-full flex flex-col">
                 {/* Enhanced decorative elements */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 group-hover:bg-accent/5 transition-colors duration-500"></div>
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/5 rounded-full blur-3xl -ml-24 -mb-24 group-hover:bg-primary/5 transition-colors duration-500"></div>
                 <div className="absolute top-1/2 left-0 w-16 h-16 bg-accent/10 rounded-full blur-xl -ml-8 opacity-70"></div>
                 <div className="absolute top-1/4 right-1/4 w-8 h-8 bg-primary/10 rounded-full blur-md opacity-70"></div>
                 
-                <CardHeader className="pb-4 relative z-10 pt-8">
-                  <CardTitle className="text-xl font-bold text-primary">Send Us a Message</CardTitle>
-                  <p className="text-muted-foreground mt-2">
+                <CardHeader className="pb-3 sm:pb-4 relative z-10 pt-6 sm:pt-8 px-4 sm:px-6 md:px-8">
+                  <CardTitle className="text-lg sm:text-xl font-bold text-primary">Send Us a Message</CardTitle>
+                  <p className="text-sm sm:text-base text-muted-foreground mt-1 sm:mt-2">
                     Fill out the form below and we'll get back to you within 24 hours.
                   </p>
                 </CardHeader>
-                <CardContent className="relative z-10 px-8 pb-8 flex-1">
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-5">
-                      <div className="space-y-2 group">
-                        <Label htmlFor="name" className="text-sm font-medium flex items-center text-primary/80 group-focus-within:text-accent transition-colors duration-200">
-                          <span className="mr-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">→</span>
+                <CardContent className="relative z-10 px-4 sm:px-6 md:px-8 pb-6 sm:pb-8 flex-1">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
+                      <div className="space-y-1.5 sm:space-y-2 group">
+                        <Label htmlFor="name" className="text-xs sm:text-sm font-medium flex items-center text-primary/80 group-focus-within:text-accent transition-colors duration-200">
+                          <span className="mr-1.5 sm:mr-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">→</span>
                           Full Name *
                         </Label>
                         <Input
@@ -94,13 +94,13 @@ export default function ContactPage() {
                           value={formData.name}
                           onChange={handleChange}
                           required
-                          className="h-12 rounded-xl border-border focus:border-accent/50 focus:ring-accent/30 transition-all duration-300 bg-primary/[0.02] focus:bg-white"
+                          className="h-10 sm:h-12 text-sm sm:text-base rounded-lg sm:rounded-xl border-border focus:border-accent/50 focus:ring-accent/30 transition-all duration-300 bg-primary/[0.02] focus:bg-white"
                           placeholder="John Doe"
                         />
                       </div>
-                      <div className="space-y-2 group">
-                        <Label htmlFor="email" className="text-sm font-medium flex items-center text-primary/80 group-focus-within:text-accent transition-colors duration-200">
-                          <span className="mr-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">→</span>
+                      <div className="space-y-1.5 sm:space-y-2 group">
+                        <Label htmlFor="email" className="text-xs sm:text-sm font-medium flex items-center text-primary/80 group-focus-within:text-accent transition-colors duration-200">
+                          <span className="mr-1.5 sm:mr-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">→</span>
                           Email Address *
                         </Label>
                         <Input
@@ -110,7 +110,7 @@ export default function ContactPage() {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          className="h-12 rounded-xl border-border focus:border-accent/50 focus:ring-accent/30 transition-all duration-300 bg-primary/[0.02] focus:bg-white"
+                          className="h-10 sm:h-12 text-sm sm:text-base rounded-lg sm:rounded-xl border-border focus:border-accent/50 focus:ring-accent/30 transition-all duration-300 bg-primary/[0.02] focus:bg-white"
                           placeholder="john@example.com"
                         />
                       </div>
@@ -131,9 +131,9 @@ export default function ContactPage() {
                       />
                     </div>
 
-                    <div className="space-y-2 group">
-                      <Label htmlFor="subject" className="text-sm font-medium flex items-center text-primary/80 group-focus-within:text-accent transition-colors duration-200">
-                        <span className="mr-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">→</span>
+                    <div className="space-y-1.5 sm:space-y-2 group">
+                      <Label htmlFor="subject" className="text-xs sm:text-sm font-medium flex items-center text-primary/80 group-focus-within:text-accent transition-colors duration-200">
+                        <span className="mr-1.5 sm:mr-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">→</span>
                         Subject *
                       </Label>
                       <Input
@@ -142,14 +142,14 @@ export default function ContactPage() {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="h-12 rounded-xl border-border focus:border-accent/50 focus:ring-accent/30 transition-all duration-300 bg-primary/[0.02] focus:bg-white"
-                        placeholder="How can we help you?"
+                        className="h-10 sm:h-12 text-sm sm:text-base rounded-lg sm:rounded-xl border-border focus:border-accent/50 focus:ring-accent/30 transition-all duration-300 bg-primary/[0.02] focus:bg-white"
+                        placeholder="Project Inquiry"
                       />
                     </div>
-
-                    <div className="space-y-2 group">
-                      <Label htmlFor="message" className="text-sm font-medium flex items-center text-primary/80 group-focus-within:text-accent transition-colors duration-200">
-                        <span className="mr-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">→</span>
+                    
+                    <div className="space-y-1.5 sm:space-y-2 group">
+                      <Label htmlFor="message" className="text-xs sm:text-sm font-medium flex items-center text-primary/80 group-focus-within:text-accent transition-colors duration-200">
+                        <span className="mr-1.5 sm:mr-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">→</span>
                         Message *
                       </Label>
                       <Textarea
@@ -158,9 +158,8 @@ export default function ContactPage() {
                         value={formData.message}
                         onChange={handleChange}
                         required
-                        rows={5}
-                        className="resize-none rounded-xl border-border focus:border-accent/50 focus:ring-accent/30 transition-all duration-300 bg-primary/[0.02] focus:bg-white"
-                        placeholder="Tell us about your project..."
+                        className="min-h-24 sm:min-h-32 text-sm sm:text-base rounded-lg sm:rounded-xl border-border focus:border-accent/50 focus:ring-accent/30 transition-all duration-300 bg-primary/[0.02] focus:bg-white"
+                        placeholder="Tell us about your project or inquiry..."
                       />
                     </div>
 
@@ -169,10 +168,10 @@ export default function ContactPage() {
                         <div className="absolute -inset-0.5 bg-gradient-to-r from-accent to-amber-500 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
                         <Button
                           type="submit"
-                          className="relative w-full bg-gradient-to-r from-accent to-amber-500 hover:from-amber-500 hover:to-accent text-white h-14 font-medium border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-xl text-lg"
+                          className="relative w-full bg-gradient-to-r from-accent to-amber-500 hover:from-amber-500 hover:to-accent text-white h-10 sm:h-14 font-medium border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-xl text-sm sm:text-lg"
                         >
                           Send Message
-                          <Send className="ml-2 h-5 w-5 animate-pulse" />
+                          <Send className="ml-1.5 sm:ml-2 h-4 sm:h-5 w-4 sm:w-5 animate-pulse" />
                         </Button>
                       </div>
                       <div className="flex items-center justify-center mt-4 bg-primary/5 py-2 px-4 rounded-lg">
@@ -190,20 +189,20 @@ export default function ContactPage() {
             {/* Contact Info & Stats */}
             <div className="flex flex-col h-full">
               {/* Contact Information */}
-              <Card className="border-0 shadow-xl group hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-cream to-white overflow-hidden transform hover:scale-[1.02] hover:border-gold/10 hover:border rounded-3xl h-full flex flex-col">
+              <Card className="border-0 shadow-xl sm:shadow-2xl group hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-cream to-white overflow-hidden transform hover:scale-[1.02] hover:border-gold/10 hover:border rounded-xl sm:rounded-3xl h-full flex flex-col">
               
-                <CardHeader className="relative pt-8 pb-4">
+                <CardHeader className="relative pt-6 sm:pt-8 pb-3 sm:pb-4">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-navy/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-gold/5 transition-colors duration-500"></div>
                   <div className="absolute bottom-0 left-0 w-24 h-24 bg-gold/5 rounded-full blur-2xl -ml-12 -mb-12 group-hover:bg-navy/5 transition-colors duration-500"></div>
-                  <CardTitle className="text-xl font-bold text-navy">Contact Information</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl font-bold text-navy">Contact Information</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4 relative z-10 px-6 pb-6 flex-1">
-                  <div className="flex items-start space-x-3 group/item hover:-translate-y-1 transition-transform duration-300 p-2 hover:bg-navy/[0.02] rounded-xl">
-                    <div className="w-10 h-10 bg-navy/5 rounded-lg flex items-center justify-center group-hover/item:bg-gold/10 transition-colors duration-300 shadow-sm">
+                <CardContent className="space-y-3 sm:space-y-4 relative z-10 px-4 sm:px-6 pb-4 sm:pb-6 flex-1">
+                  <div className="flex items-start space-x-2 sm:space-x-3 group/item hover:-translate-y-1 transition-transform duration-300 p-1.5 sm:p-2 hover:bg-navy/[0.02] rounded-lg sm:rounded-xl">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-navy/5 rounded-md sm:rounded-lg flex items-center justify-center group-hover/item:bg-gold/10 transition-colors duration-300 shadow-sm">
                       <MapPin className="h-4 w-4 text-gold group-hover/item:scale-110 transition-transform duration-300" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-medium text-navy">Address</h4>
+                      <h4 className="text-sm sm:text-base font-medium text-navy">Address</h4>
                       <p className="text-xs text-gray-600 mt-0.5 leading-relaxed">
                         {contactInfo.address.line1}<br />
                         {contactInfo.address.line2}<br />
@@ -212,12 +211,12 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3 group/item hover:-translate-y-1 transition-transform duration-300 p-2 hover:bg-navy/[0.02] rounded-xl">
-                    <div className="w-10 h-10 bg-navy/5 rounded-lg flex items-center justify-center group-hover/item:bg-gold/10 transition-colors duration-300 shadow-sm">
+                  <div className="flex items-start space-x-2 sm:space-x-3 group/item hover:-translate-y-1 transition-transform duration-300 p-1.5 sm:p-2 hover:bg-navy/[0.02] rounded-lg sm:rounded-xl">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-navy/5 rounded-md sm:rounded-lg flex items-center justify-center group-hover/item:bg-gold/10 transition-colors duration-300 shadow-sm">
                       <Phone className="h-4 w-4 text-gold group-hover/item:scale-110 transition-transform duration-300" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-medium text-navy">Phone</h4>
+                      <h4 className="text-sm sm:text-base font-medium text-navy">Phone</h4>
                       <p className="text-xs text-gray-600 mt-0.5">
                         <a href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-gold transition-colors duration-300">
                           {contactInfo.phone}
@@ -226,12 +225,12 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3 group/item hover:-translate-y-1 transition-transform duration-300 p-2 hover:bg-navy/[0.02] rounded-xl">
-                    <div className="w-10 h-10 bg-navy/5 rounded-lg flex items-center justify-center group-hover/item:bg-gold/10 transition-colors duration-300 shadow-sm">
+                  <div className="flex items-start space-x-2 sm:space-x-3 group/item hover:-translate-y-1 transition-transform duration-300 p-1.5 sm:p-2 hover:bg-navy/[0.02] rounded-lg sm:rounded-xl">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-navy/5 rounded-md sm:rounded-lg flex items-center justify-center group-hover/item:bg-gold/10 transition-colors duration-300 shadow-sm">
                       <Mail className="h-4 w-4 text-gold group-hover/item:scale-110 transition-transform duration-300" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-medium text-navy">Email</h4>
+                      <h4 className="text-sm sm:text-base font-medium text-navy">Email</h4>
                       <p className="text-xs text-gray-600 mt-0.5">
                         <a href={`mailto:${contactInfo.email}`} className="hover:text-gold transition-colors duration-300">
                           {contactInfo.email}
@@ -266,19 +265,19 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-navy/10">
-                    <h4 className="font-medium text-navy mb-2">Connect With Us</h4>
-                    <div className="flex space-x-3">
+                  <div className="mt-4 sm:mt-6 pt-4 border-t border-navy/10">
+                    <h4 className="text-sm sm:text-base font-medium text-navy mb-2 sm:mb-3">Connect With Us</h4>
+                    <div className="flex space-x-2 sm:space-x-3">
                       {contactInfo.socialMedia.map((social, index) => (
                         <a
                           key={index}
                           href={social.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-8 h-8 bg-navy/5 rounded-full flex items-center justify-center hover:bg-gold/10 transition-colors duration-300"
+                          className="w-8 h-8 sm:w-10 sm:h-10 bg-navy/5 rounded-full flex items-center justify-center hover:bg-gold/10 duration-300 hover:-translate-y-1 transform transition-transform"
                         >
                           {React.createElement(social.icon, { 
-                            className: "h-3.5 w-3.5 text-navy hover:text-gold transition-colors duration-300" 
+                            className: "h-3.5 w-3.5 sm:h-4 sm:w-4 text-navy hover:text-gold transition-colors duration-300" 
                           })}
                         </a>
                       ))}
