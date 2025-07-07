@@ -75,15 +75,15 @@ export default function NewBlogPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--gold-hsl))] bg-clip-text text-transparent">Create New Blog</h1>
-        <p className="text-muted-foreground">Add a new blog post to your website.</p>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--gold-hsl))] bg-clip-text text-transparent">Create New Blog</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">Add a new blog post to your website.</p>
       </div>
 
       <Card className="border border-[hsl(var(--border))] shadow-md hover:shadow-lg transition-shadow duration-200">
         <form onSubmit={handleSubmit}>
-          <CardHeader className="bg-gradient-to-r from-[hsl(var(--background))] to-[hsl(var(--accent))]/10 border-[hsl(var(--border))]">
+          <CardHeader className="bg-gradient-to-r from-[hsl(var(--background))] to-[hsl(var(--accent))]/10 border-[hsl(var(--border))] py-3 sm:py-4 px-4 sm:px-6">
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 p-4 sm:p-6">
             <div className="space-y-2">
               <Label htmlFor="title">Title</Label>
               <Input
@@ -109,11 +109,11 @@ export default function NewBlogPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="content">Content (Markdown supported)</Label>
+              <Label htmlFor="content" className="text-sm sm:text-base">Content (Markdown supported)</Label>
               <Tabs defaultValue="write" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 bg-[hsl(var(--accent))]/20">
-                  <TabsTrigger value="write">Write</TabsTrigger>
-                  <TabsTrigger value="preview">Preview</TabsTrigger>
+                  <TabsTrigger value="write" className="text-xs sm:text-sm py-1.5 sm:py-2">Write</TabsTrigger>
+                  <TabsTrigger value="preview" className="text-xs sm:text-sm py-1.5 sm:py-2">Preview</TabsTrigger>
                 </TabsList>
                 <TabsContent value="write" className="mt-2">
                   <Textarea
@@ -122,12 +122,12 @@ export default function NewBlogPage() {
                     value={formData.content}
                     onChange={handleChange}
                     placeholder="Write your content in Markdown format. Supports headings, lists, code blocks, etc."
-                    className="min-h-[300px] font-mono text-sm"
+                    className="min-h-[200px] sm:min-h-[300px] font-mono text-xs sm:text-sm"
                     required
                   />
                   <div className="mt-2 text-xs text-muted-foreground">
-                    <p>Markdown cheatsheet:</p>
-                    <ul className="list-disc pl-5 mt-1 space-y-1">
+                    <p className="text-xs">Markdown cheatsheet:</p>
+                    <ul className="list-disc pl-4 sm:pl-5 mt-1 space-y-0.5 sm:space-y-1 text-xs">
                       <li># Heading 1, ## Heading 2, ### Heading 3</li>
                       <li>**Bold text**, *Italic text*</li>
                       <li>[Link text](https://example.com)</li>
@@ -139,7 +139,7 @@ export default function NewBlogPage() {
                     </ul>
                   </div>
                 </TabsContent>
-                <TabsContent value="preview" className="mt-2 border border-[hsl(var(--border))] rounded-md p-4 min-h-[300px] bg-white shadow-sm">
+                <TabsContent value="preview" className="mt-2 border border-[hsl(var(--border))] rounded-md p-3 sm:p-4 min-h-[200px] sm:min-h-[300px] bg-white shadow-sm overflow-auto">
                   {formData.content ? (
                     <div className="markdown-content prose max-w-none">
                       <ReactMarkdown
@@ -220,19 +220,19 @@ export default function NewBlogPage() {
               />
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between border-t border-[hsl(var(--border))] bg-gradient-to-r from-[hsl(var(--background))] to-[hsl(var(--accent))]/10">
+          <CardFooter className="flex flex-col sm:flex-row sm:justify-between gap-3 sm:gap-0 border-t border-[hsl(var(--border))] bg-gradient-to-r from-[hsl(var(--background))] to-[hsl(var(--accent))]/10 p-4 sm:p-6">
             <Button
               type="button"
               variant="outline"
               onClick={() => router.push('/admin/blogs')}
-              className="border-[hsl(var(--border))] hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))] transition-colors duration-200"
+              className="border-[hsl(var(--border))] hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))] transition-colors duration-200 w-full sm:w-auto order-2 sm:order-1 text-xs sm:text-sm py-1.5 sm:py-2"
             >
               Cancel
             </Button>
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="bg-[hsl(var(--gold-hsl))] hover:bg-[hsl(var(--gold-hsl))]/90 text-white shadow-md hover:shadow-lg transition-all duration-200"
+              className="bg-[hsl(var(--gold-hsl))] hover:bg-[hsl(var(--gold-hsl))]/90 text-white shadow-md hover:shadow-lg transition-all duration-200 w-full sm:w-auto order-1 sm:order-2 text-xs sm:text-sm py-1.5 sm:py-2"
             >
               {isSubmitting ? 'Creating...' : 'Create Blog'}
             </Button>

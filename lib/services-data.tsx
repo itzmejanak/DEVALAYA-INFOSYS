@@ -5,6 +5,7 @@ export const services = [
   {
     icon: Code,
     title: "Web Development",
+    slug: "web-development",
     description:
       "Custom web applications built with modern frameworks and responsive design principles to deliver exceptional user experiences.",
     features: [
@@ -18,6 +19,7 @@ export const services = [
   {
     icon: Database,
     title: "Database Solutions",
+    slug: "database-solutions",
     description:
       "Robust database design, optimization, and management services to ensure your data is secure, accessible, and scalable.",
     features: [
@@ -31,6 +33,7 @@ export const services = [
   {
     icon: Shield,
     title: "Cybersecurity",
+    slug: "cybersecurity",
     description:
       "Comprehensive security solutions to protect your digital assets from threats and ensure compliance with industry standards.",
     features: [
@@ -44,6 +47,7 @@ export const services = [
   {
     icon: Cpu,
     title: "AI Integration",
+    slug: "ai-integration",
     description:
       "Leverage the power of artificial intelligence to automate processes, gain insights, and create intelligent applications.",
     features: [
@@ -57,6 +61,7 @@ export const services = [
   {
     icon: Globe,
     title: "Digital Marketing",
+    slug: "digital-marketing",
     description:
       "Strategic digital marketing services to increase your online presence, drive traffic, and convert visitors into customers.",
     features: [
@@ -70,6 +75,7 @@ export const services = [
   {
     icon: Zap,
     title: "IT Consulting",
+    slug: "it-consulting",
     description:
       "Expert guidance on technology strategy, digital transformation, and IT infrastructure to align with your business goals.",
     features: [
@@ -83,6 +89,7 @@ export const services = [
   {
     icon: BarChart,
     title: "Data Analytics",
+    slug: "data-analytics",
     description:
       "Transform raw data into actionable insights with our comprehensive data analytics and visualization services.",
     features: [
@@ -96,6 +103,7 @@ export const services = [
   {
     icon: Layers,
     title: "UI/UX Design",
+    slug: "ui-ux-design",
     description:
       "Create intuitive, engaging user experiences with our user-centered design approach and attention to detail.",
     features: [
@@ -109,6 +117,7 @@ export const services = [
   {
     icon: Smartphone,
     title: "Mobile App Development",
+    slug: "mobile-app-development",
     description:
       "Native and cross-platform mobile applications that deliver seamless experiences across all devices.",
     features: [
@@ -122,6 +131,7 @@ export const services = [
   {
     icon: Cloud,
     title: "Cloud Services",
+    slug: "cloud-services",
     description:
       "Migrate, optimize, and manage your applications in the cloud for improved scalability, reliability, and cost-efficiency.",
     features: [
@@ -135,6 +145,7 @@ export const services = [
   {
     icon: Server,
     title: "DevOps Solutions",
+    slug: "devops-solutions",
     description:
       "Streamline your development and operations with automated workflows, continuous integration, and deployment pipelines.",
     features: [
@@ -148,6 +159,7 @@ export const services = [
   {
     icon: Headphones,
     title: "IT Support",
+    slug: "it-support",
     description:
       "Reliable technical support services to keep your systems running smoothly and resolve issues quickly.",
     features: [

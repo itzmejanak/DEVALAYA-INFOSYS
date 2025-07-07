@@ -75,44 +75,45 @@ export default function NewCareerPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--gold-hsl))] bg-clip-text text-transparent">Create New Career Opportunity</h1>
-        <p className="text-muted-foreground">Add a new job listing to your website.</p>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--gold-hsl))] bg-clip-text text-transparent">Create New Career Opportunity</h1>
+        <p className="text-sm sm:text-base text-muted-foreground mt-1">Add a new job listing to your website.</p>
       </div>
 
       <Card className="border border-[hsl(var(--border))] shadow-md hover:shadow-lg transition-shadow duration-200">
         <form onSubmit={handleSubmit}>
-          <CardHeader className="bg-gradient-to-r from-[hsl(var(--background))] to-[hsl(var(--accent))]/10 border-[hsl(var(--border))]">
+          <CardHeader className="bg-gradient-to-r from-[hsl(var(--background))] to-[hsl(var(--accent))]/10 border-[hsl(var(--border))] px-4 sm:px-6 py-4 sm:py-6">
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="title">Job Title</Label>
+          <CardContent className="space-y-4 px-4 sm:px-6 py-4 sm:py-6">
+            <div className="space-y-1 sm:space-y-2">
+              <Label htmlFor="title" className="text-xs sm:text-sm">Job Title</Label>
               <Input
                 id="title"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="e.g. Senior Software Engineer"
+                className="h-10 sm:h-11 text-sm"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="description">Job Description</Label>
+            <div className="space-y-1 sm:space-y-2">
+              <Label htmlFor="description" className="text-xs sm:text-sm">Job Description</Label>
               <Textarea
                 id="description"
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Detailed description of the job role and responsibilities"
-                className="min-h-[100px]"
+                className="min-h-[80px] sm:min-h-[100px] text-xs sm:text-sm"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="requirements">
+            <div className="space-y-1 sm:space-y-2">
+              <Label htmlFor="requirements" className="text-xs sm:text-sm">
                 Requirements (One per line)
               </Label>
               <Textarea
@@ -121,13 +122,13 @@ export default function NewCareerPage() {
                 value={formData.requirements}
                 onChange={handleChange}
                 placeholder="Minimum 3 years of experience in React.js\nStrong knowledge of TypeScript\nExperience with Next.js"
-                className="min-h-[100px]"
+                className="min-h-[80px] sm:min-h-[100px] text-xs sm:text-sm"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="qualifications">
+            <div className="space-y-1 sm:space-y-2">
+              <Label htmlFor="qualifications" className="text-xs sm:text-sm">
                 Qualifications (One per line)
               </Label>
               <Textarea
@@ -136,62 +137,64 @@ export default function NewCareerPage() {
                 value={formData.qualifications}
                 onChange={handleChange}
                 placeholder="Bachelor's degree in Computer Science\nMaster's degree (preferred)\nRelevant certifications"
-                className="min-h-[100px]"
+                className="min-h-[80px] sm:min-h-[100px] text-xs sm:text-sm"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="experience">Experience Required</Label>
+            <div className="space-y-1 sm:space-y-2">
+              <Label htmlFor="experience" className="text-xs sm:text-sm">Experience Required</Label>
               <Input
                 id="experience"
                 name="experience"
                 value={formData.experience}
                 onChange={handleChange}
                 placeholder="e.g. 3-5 years"
+                className="h-10 sm:h-11 text-sm"
                 required
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
+            <div className="space-y-1 sm:space-y-2">
+              <Label htmlFor="location" className="text-xs sm:text-sm">Location</Label>
               <Input
                 id="location"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
                 placeholder="e.g. Kathmandu, Nepal"
+                className="h-10 sm:h-11 text-sm"
                 required
               />
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 sm:space-x-2">
               <Switch
                 id="isActive"
                 checked={formData.isActive}
                 onCheckedChange={handleSwitchChange}
-                className="data-[state=checked]:bg-[hsl(var(--gold-hsl))] data-[state=checked]:border-[hsl(var(--gold-hsl))]"
+                className="data-[state=checked]:bg-[hsl(var(--gold-hsl))] data-[state=checked]:border-[hsl(var(--gold-hsl))] scale-90 sm:scale-100"
               />
-              <Label htmlFor="isActive" className="font-medium">
+              <Label htmlFor="isActive" className="font-medium text-xs sm:text-sm">
                 <span className={formData.isActive ? 'text-green-600' : 'text-red-500'}>
                   {formData.isActive ? 'Active' : 'Inactive'}
                 </span>
               </Label>
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between border-t border-[hsl(var(--border))] bg-gradient-to-r from-[hsl(var(--background))] to-[hsl(var(--accent))]/10">
+          <CardFooter className="flex flex-col sm:flex-row sm:justify-between gap-3 sm:gap-0 border-t border-[hsl(var(--border))] bg-gradient-to-r from-[hsl(var(--background))] to-[hsl(var(--accent))]/10 px-4 sm:px-6 py-4 sm:py-6">
             <Button
               type="button"
               variant="outline"
               onClick={() => router.push('/admin/careers')}
-              className="border-[hsl(var(--border))] hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))] transition-colors duration-200"
+              className="w-full sm:w-auto border-[hsl(var(--border))] hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))] transition-colors duration-200 text-xs sm:text-sm h-9 sm:h-10"
             >
               Cancel
             </Button>
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="bg-[hsl(var(--gold-hsl))] hover:bg-[hsl(var(--gold-hsl))]/90 text-white shadow-md hover:shadow-lg transition-all duration-200"
+              className="w-full sm:w-auto bg-[hsl(var(--gold-hsl))] hover:bg-[hsl(var(--gold-hsl))]/90 text-white shadow-md hover:shadow-lg transition-all duration-200 text-xs sm:text-sm h-9 sm:h-10"
             >
               {isSubmitting ? 'Creating...' : 'Create Career'}
             </Button>

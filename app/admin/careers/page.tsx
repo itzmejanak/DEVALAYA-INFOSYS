@@ -114,86 +114,90 @@ export default function CareersPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center mb-8">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 mb-4 sm:mb-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--gold-hsl))] bg-clip-text text-transparent">Careers</h1>
-          <p className="text-muted-foreground mt-1">Manage job opportunities and listings</p>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--gold-hsl))] bg-clip-text text-transparent">Careers</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-0.5 sm:mt-1">Manage job opportunities and listings</p>
         </div>
         <Button 
           onClick={() => router.push('/admin/careers/new')}
-          className="bg-[hsl(var(--gold-hsl))] hover:bg-[hsl(var(--gold-hsl))]/90 text-white transition-all duration-300 shadow-md hover:shadow-lg"
+          className="w-full sm:w-auto bg-[hsl(var(--gold-hsl))] hover:bg-[hsl(var(--gold-hsl))]/90 text-white transition-all duration-300 shadow-md hover:shadow-lg text-sm"
         >
-          <Plus className="mr-2 h-4 w-4" /> New Career
+          <Plus className="mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" /> New Career
         </Button>
       </div>
 
       <Card className="border border-[hsl(var(--border))] shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
-        <CardHeader className="bg-[hsl(var(--card))]/50 border-b border-[hsl(var(--border))]">
-          <CardTitle className="text-[hsl(var(--primary))] flex items-center gap-2">
-            <Briefcase className="h-5 w-5 text-[hsl(var(--gold-hsl))]" /> All Career Opportunities
+        <CardHeader className="bg-[hsl(var(--card))]/50 border-b border-[hsl(var(--border))] px-4 sm:px-6 py-4 sm:py-6">
+          <CardTitle className="text-[hsl(var(--primary))] flex items-center gap-1.5 sm:gap-2 text-lg sm:text-xl">
+            <Briefcase className="h-4 w-4 sm:h-5 sm:w-5 text-[hsl(var(--gold-hsl))]" /> All Career Opportunities
           </CardTitle>
-          <CardDescription>Manage your job listings from here.</CardDescription>
+          <CardDescription className="text-xs sm:text-sm">Manage your job listings from here.</CardDescription>
         </CardHeader>
-        <CardContent className="p-0">
+        <CardContent className="p-0 overflow-x-auto">
           {isLoading ? (
-            <div className="text-center py-8 text-muted-foreground">Loading career opportunities...</div>
+            <div className="text-center py-6 sm:py-8 text-sm sm:text-base text-muted-foreground">Loading career opportunities...</div>
           ) : careers.length === 0 ? (
-            <div className="text-center py-8 flex flex-col items-center justify-center gap-2">
-              <Briefcase className="h-12 w-12 text-muted-foreground/50" />
-              <p className="text-muted-foreground">No career opportunities found. Create your first job listing!</p>
+            <div className="text-center py-6 sm:py-8 flex flex-col items-center justify-center gap-2">
+              <Briefcase className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground/50" />
+              <p className="text-sm sm:text-base text-muted-foreground">No career opportunities found. Create your first job listing!</p>
             </div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Experience</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Created</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {careers.map((career) => (
-                  <TableRow key={career._id}>
-                    <TableCell className="font-medium">{career.title}</TableCell>
-                    <TableCell>{career.location}</TableCell>
-                    <TableCell>{career.experience}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <Switch
-                          checked={career.isActive}
-                          onCheckedChange={() => toggleStatus(career._id, career.isActive)}
-                        />
-                        <span className={career.isActive ? 'text-green-600' : 'text-red-600'}>
-                          {career.isActive ? 'Active' : 'Inactive'}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell>{format(new Date(career.createdAt), 'MMM dd, yyyy')}</TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => router.push(`/admin/careers/edit/${career._id}`)}
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(career._id)}
-                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-xs sm:text-sm">Title</TableHead>
+                    <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Location</TableHead>
+                    <TableHead className="text-xs sm:text-sm hidden md:table-cell">Experience</TableHead>
+                    <TableHead className="text-xs sm:text-sm">Status</TableHead>
+                    <TableHead className="text-xs sm:text-sm hidden md:table-cell">Created</TableHead>
+                    <TableHead className="text-xs sm:text-sm text-right">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {careers.map((career) => (
+                    <TableRow key={career._id}>
+                      <TableCell className="font-medium text-xs sm:text-sm py-2 sm:py-4">{career.title}</TableCell>
+                      <TableCell className="text-xs sm:text-sm py-2 sm:py-4 hidden sm:table-cell">{career.location}</TableCell>
+                      <TableCell className="text-xs sm:text-sm py-2 sm:py-4 hidden md:table-cell">{career.experience}</TableCell>
+                      <TableCell className="text-xs sm:text-sm py-2 sm:py-4">
+                        <div className="flex items-center space-x-1 sm:space-x-2">
+                          <Switch
+                            checked={career.isActive}
+                            onCheckedChange={() => toggleStatus(career._id, career.isActive)}
+                            className="scale-75 sm:scale-100"
+                          />
+                          <span className={`text-xs sm:text-sm ${career.isActive ? 'text-green-600' : 'text-red-600'}`}>
+                            {career.isActive ? 'Active' : 'Inactive'}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-xs sm:text-sm py-2 sm:py-4 hidden md:table-cell">{format(new Date(career.createdAt), 'MMM dd, yyyy')}</TableCell>
+                      <TableCell className="text-xs sm:text-sm py-2 sm:py-4 text-right">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => router.push(`/admin/careers/edit/${career._id}`)}
+                          className="h-7 w-7 sm:h-8 sm:w-8 p-0"
+                        >
+                          <Pencil className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDelete(career._id)}
+                          className="h-7 w-7 sm:h-8 sm:w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                        >
+                          <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           )}
         </CardContent>
       </Card>

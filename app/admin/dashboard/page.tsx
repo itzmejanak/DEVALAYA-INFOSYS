@@ -57,14 +57,14 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div className="bg-card dark:bg-card p-6 rounded-xl shadow-sm border border-border dark:border-border">
-        <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary))] bg-clip-text text-transparent">Dashboard</h1>
-        <p className="text-muted-foreground mt-2">
+      <div className="bg-card dark:bg-card p-4 sm:p-6 rounded-xl shadow-sm border border-border dark:border-border">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary))] bg-clip-text text-transparent">Dashboard</h1>
+        <p className="text-sm sm:text-base text-muted-foreground mt-1 sm:mt-2">
           Welcome back, <span className="font-medium text-[hsl(var(--primary))] dark:text-[hsl(var(--accent))]">{session?.user?.name || 'Admin'}</span>!
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="border-0 shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-[hsl(var(--chart-1))]"></div>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -122,16 +122,16 @@ export default function DashboardPage() {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>
+        <CardHeader className="pb-3 sm:pb-4">
+          <CardTitle className="text-lg sm:text-xl">Quick Actions</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">
             Manage your website content from here.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-6">
+        <CardContent className="grid gap-4 sm:gap-6">
           <div>
-            <h3 className="mb-4 text-lg font-medium">Recent Updates</h3>
-            <div className="text-sm">
+            <h3 className="mb-3 sm:mb-4 text-base sm:text-lg font-medium">Recent Updates</h3>
+            <div className="text-xs sm:text-sm">
               {isLoading ? (
                 <p>Loading recent activity...</p>
               ) : (

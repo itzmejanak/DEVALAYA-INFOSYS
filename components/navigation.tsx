@@ -52,14 +52,21 @@ export default function Navigation() {
     { name: "About", href: "/about" },
     { 
       name: "Services", 
-      href: "#",
+      href: "/services",
       hasDropdown: true,
       dropdownItems: [
-        { name: "Web Development", href: "/about#web-development" },
-        { name: "Mobile Apps", href: "/about#mobile-apps" },
-        { name: "Cloud Solutions", href: "/about#cloud-solutions" },
-        { name: "IT Consulting", href: "/about#it-consulting" },
-        { name: "Digital Marketing", href: "/about#digital-marketing" },
+        { name: "Web Development", href: "/services/web-development" },
+        { name: "Database Solutions", href: "/services/database-solutions" },
+        { name: "Cybersecurity", href: "/services/cybersecurity" },
+        { name: "AI Integration", href: "/services/ai-integration" },
+        { name: "Digital Marketing", href: "/services/digital-marketing" },
+        { name: "IT Consulting", href: "/services/it-consulting" },
+        { name: "Data Analytics", href: "/services/data-analytics" },
+        { name: "UI/UX Design", href: "/services/ui-ux-design" },
+        { name: "Mobile App Development", href: "/services/mobile-app-development" },
+        { name: "Cloud Services", href: "/services/cloud-services" },
+        { name: "DevOps Solutions", href: "/services/devops-solutions" },
+        { name: "IT Support", href: "/services/it-support" },
       ] 
     },
     { name: "Blog", href: "/blog" },
@@ -163,8 +170,8 @@ export default function Navigation() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden transition-all duration-300 overflow-hidden ${
-          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        <div className={`md:hidden transition-all duration-300 overflow-y-auto ${
+          isOpen ? 'max-h-[80vh] opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="py-3 space-y-1 border-t border-gold/10">
             {navigation.map((item) => (
@@ -212,7 +219,7 @@ export default function Navigation() {
             
             <div className="pt-3 mt-3 border-t border-gold/10">
               <Link href="/contact" onClick={() => setIsOpen(false)}>
-                <Button size="sm" className="w-full bg-gold hover:bg-gold/90 text-navy text-base font-medium rounded-md py-2.5">
+                <Button size="sm" className="w-full bg-gold hover:bg-gold/90 text-white text-base font-medium rounded-md py-3">
                   Get in Touch
                 </Button>
               </Link>
