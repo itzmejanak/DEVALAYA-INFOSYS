@@ -7,10 +7,11 @@ import { services, serviceProcess, serviceTestimonials } from "@/lib/services-da
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { use } from "react"
 
 export default function ServicePage({ params }: { params: { slug: string } }) {
   // Unwrap params using React.use()
-  const { slug } = params;
+  const { slug } = use(params);
   
   // Find the service based on the slug
   const service = services.find(s => s.slug === slug)

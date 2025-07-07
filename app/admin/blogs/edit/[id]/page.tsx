@@ -23,6 +23,8 @@ interface BlogData {
 }
 
 export default function EditBlogPage({ params }: { params: { id: string } }) {
+  // Unwrap params using React.use()
+  const { id } = params;
   const [formData, setFormData] = useState<BlogData>({
     title: '',
     summary: '',
@@ -35,7 +37,6 @@ export default function EditBlogPage({ params }: { params: { id: string } }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const { id } = params as { id: string };
 
   useEffect(() => {
     const fetchBlog = async () => {

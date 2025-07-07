@@ -21,6 +21,8 @@ interface CareerData {
 }
 
 export default function EditCareerPage({ params }: { params: { id: string } }) {
+  // Unwrap params using React.use()
+  const { id } = params;
   const [formData, setFormData] = useState<CareerData>({
     title: '',
     description: '',
@@ -34,7 +36,6 @@ export default function EditCareerPage({ params }: { params: { id: string } }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const { id } = params as { id: string };
 
   useEffect(() => {
     const fetchCareer = async () => {

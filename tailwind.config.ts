@@ -63,6 +63,9 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        glow: "0 0 10px rgba(177, 132, 61, 0.3), 0 0 20px rgba(177, 132, 61, 0.15)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -81,12 +84,17 @@ const config: Config = {
           "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
+        "pulse-glow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "progress-bar": "progress-bar 1.5s ease-in-out infinite",
         "fade-in-scale": "fade-in-scale 0.3s ease-out",
+        "pulse-glow": "pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },
