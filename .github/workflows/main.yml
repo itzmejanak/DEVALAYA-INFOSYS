@@ -3,8 +3,7 @@ name: Deploy website on push
 on:
   push:
     branches:
-      - main
-
+      - main          # <-- changed from “master”
 
 jobs:
   web-deploy:
@@ -13,7 +12,7 @@ jobs:
 
     steps:
       - name: Get latest code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3        # v3 is current
 
       - name: Use Node.js 18
         uses: actions/setup-node@v3
@@ -25,23 +24,9 @@ jobs:
           npm ci --legacy-peer-deps
           npm run build
 
-      - name: Sync files to FTP
+      - name: Sync files via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server:   ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-
-          # local folder to upload from (repo root)
-          local-dir: ./
-
-          # remote folder to upload into
-          server-dir: ./      # change if you need a sub-folder
-
-          # only upload the files & folders you want
-          include: |
-            .next/**/*
-            public/**/*
-            server.js
-            package.json
-            node_modules/**/*
