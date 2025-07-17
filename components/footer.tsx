@@ -4,6 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Mail, MapPin, Phone, Facebook, Twitter, Linkedin, Instagram, Github, ChevronRight, ExternalLink } from "lucide-react"
 import { services as allServices } from "@/lib/services-data"
+import { contactInfo } from "@/lib/data"
 import { cn } from "@/lib/utils"
 
 // We've added shadow-glow and pulse-glow to tailwind.config.ts
@@ -18,7 +19,7 @@ const FooterSectionHeader = ({ title }: { title: string }) => (
 
 // Footer link component
 const FooterLink = ({ href, children }: { href: string, children: React.ReactNode }) => (
-  <Link 
+  <Link
     href={href}
     className="text-gray-300 hover:text-gold duration-300 flex items-center group-hover:translate-x-1 transform transition-transform py-1"
   >
@@ -29,7 +30,7 @@ const FooterLink = ({ href, children }: { href: string, children: React.ReactNod
 
 // View all button component
 const ViewAllButton = ({ href, children }: { href: string, children: React.ReactNode }) => (
-  <Link 
+  <Link
     href={href}
     className={cn(
       "text-gold hover:text-white duration-300 flex items-center justify-center",
@@ -43,14 +44,14 @@ const ViewAllButton = ({ href, children }: { href: string, children: React.React
 )
 
 // Contact item component
-const ContactItem = ({ 
-  icon: Icon, 
-  children, 
-  href 
-}: { 
-  icon: React.ElementType, 
+const ContactItem = ({
+  icon: Icon,
+  children,
+  href
+}: {
+  icon: React.ElementType,
   children: React.ReactNode,
-  href?: string 
+  href?: string
 }) => {
   const content = (
     <>
@@ -78,9 +79,9 @@ const ContactItem = ({
 
 // Social link component
 const SocialLink = ({ href, icon: Icon, name }: { href: string, icon: React.ElementType, name: string }) => (
-  <a 
-    href={href} 
-    target="_blank" 
+  <a
+    href={href}
+    target="_blank"
     rel="noopener noreferrer"
     className="bg-navy-light hover:bg-gold/20 text-gray-300 hover:text-gold p-2.5 rounded-full transition-all duration-300 transform hover:scale-110 hover:shadow-glow"
     aria-label={name}
@@ -91,8 +92,8 @@ const SocialLink = ({ href, icon: Icon, name }: { href: string, icon: React.Elem
 
 // Legal link component
 const LegalLink = ({ href, children }: { href: string, children: React.ReactNode }) => (
-  <Link 
-    href={href} 
+  <Link
+    href={href}
     className="text-gray-400 hover:text-gold text-xs sm:text-sm transition-colors duration-300 flex items-center hover:underline hover:underline-offset-4"
   >
     <span>{children}</span>
@@ -102,7 +103,7 @@ const LegalLink = ({ href, children }: { href: string, children: React.ReactNode
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
-  
+
   const navigation = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
@@ -117,13 +118,14 @@ export default function Footer() {
     href: `/services/${service.slug}`
   }))
 
+  // Map social media links from contactInfo
   const socialLinks = [
-    { name: "Facebook", icon: Facebook, href: "https://facebook.com" },
-    { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
-    { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
-    { name: "Instagram", icon: Instagram, href: "https://instagram.com" },
-    { name: "GitHub", icon: Github, href: "https://github.com" },
-  ]
+    { name: "Facebook", icon: Facebook, href: contactInfo.socialMedia.find(s => s.icon === Facebook)?.url || "#" },
+    { name: "Twitter", icon: Twitter, href: contactInfo.socialMedia.find(s => s.icon === Twitter)?.url || "#" },
+    { name: "LinkedIn", icon: Linkedin, href: contactInfo.socialMedia.find(s => s.icon === Linkedin)?.url || "#" },
+    { name: "Instagram", icon: Instagram, href: contactInfo.socialMedia.find(s => s.icon === Instagram)?.url || "#" },
+    { name: "GitHub", icon: Github, href: "#" }
+  ].filter(link => link.href !== "#" || link.name === "GitHub")
 
   return (
     <footer className="bg-navy text-white pt-10 pb-6 border-t-2 border-gold/20 shadow-lg">
@@ -139,12 +141,12 @@ export default function Footer() {
           <div className="space-y-4 sm:col-span-2 lg:col-span-1 rounded-lg ">
             <Link href="/" className="inline-block group" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
               <div className="relative w-auto h-10 group-hover:scale-105 transition-all duration-300 filter hover:drop-shadow-[0_0_8px_rgba(177,132,61,0.5)]">
-                <Image 
-                  src="/logo.png" 
-                  alt="Devalaya Infosys Logo" 
-                  width={160} 
-                  height={48} 
-                  className="object-contain" 
+                <Image
+                  src="/logo.png"
+                  alt="Devalaya Infosys Logo"
+                  width={160}
+                  height={48}
+                  className="object-contain"
                   priority
                 />
               </div>
@@ -154,7 +156,7 @@ export default function Footer() {
             </p>
             <div className="flex flex-nowrap gap-2 mt-4 justify-center sm:justify-start">
               {socialLinks.map((item) => (
-                <SocialLink 
+                <SocialLink
                   key={item.name}
                   name={item.name}
                   href={item.href}
@@ -185,7 +187,7 @@ export default function Footer() {
                   <FooterLink href={item.href}>{item.name}</FooterLink>
                 </div>
               ))}
-              
+
               {/* Show More Services Link */}
               <div className="group col-span-2 mt-2 flex justify-center">
                 <ViewAllButton href="/services">View All Services</ViewAllButton>
@@ -198,14 +200,15 @@ export default function Footer() {
             <FooterSectionHeader title="Contact Us" />
             <ul className="space-y-3 p-2 rounded-lg">
               <ContactItem icon={MapPin}>
-                123 IT Park, Tech Avenue<br />
-                Bangalore, Karnataka 560001
+                {contactInfo.address.line1}<br />
+                {contactInfo.address.line2}<br />
+                {contactInfo.address.city} {contactInfo.address.postalCode}, {contactInfo.address.country}
               </ContactItem>
-              <ContactItem icon={Phone} href="tel:+919876543210">
-                +91 9876 543 210
+              <ContactItem icon={Phone} href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}>
+                {contactInfo.phone}
               </ContactItem>
-              <ContactItem icon={Mail} href="mailto:info@devalayainfosys.com">
-                info@devalayainfosys.com
+              <ContactItem icon={Mail} href={`mailto:${contactInfo.email}`}>
+                {contactInfo.email}
               </ContactItem>
             </ul>
           </div>
