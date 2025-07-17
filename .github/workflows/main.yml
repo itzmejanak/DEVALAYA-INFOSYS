@@ -24,7 +24,7 @@ jobs:
           npm ci --legacy-peer-deps
           npm run build
 
-      - name: Sync files via FTP
+      - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server:   ftp.devalayainfosys.com
@@ -32,3 +32,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: 21
+          server-dir: devalayaweb/   # ← everything will land in /home/devalay1/devalayaweb/
