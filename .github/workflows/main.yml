@@ -32,4 +32,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: 21
-          server-dir: ./
+          server-dir: devalayaweb/   # ← everything will land in /home/devalay1/devalayaweb/
