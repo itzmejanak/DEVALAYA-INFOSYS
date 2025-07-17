@@ -1,0 +1,46 @@
+name: Deploy website on push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Build project
+        run: |
+          npm ci --legacy-peer-deps
+          npm run build
+
+      - name: Sync files to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server:   ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+          # local folder to upload from (repo root)
+          local-dir: ./
+
+          # remote folder to upload into
+          server-dir: ./      # change if you need a sub-folder
+
+          # only upload the files & folders you want
+          include: |
+            .next/**/*
+            public/**/*
+            server.js
+            package.json
+            node_modules/**/*
