@@ -260,8 +260,8 @@ export default function CareerPage() {
                             <p className="flex items-start">
                               <span className="text-accent mr-2 mt-1 font-bold">3.</span>
                               <span>Send your application to{' '}
-                                <a href={`mailto:career@devalayainfosys.com.np?subject=Application for ${career.title}`} className="text-accent font-medium hover:underline transition-colors duration-300">
-                                  career@devalayainfosys.com.np
+                                <a href={`mailto:info.devalayainfosys@gmail.com?subject=Application for ${career.title}`} className="text-accent font-medium hover:underline transition-colors duration-300">
+                                info.devalayainfosys@gmail.com
                                 </a>
                               </span>
                             </p>
