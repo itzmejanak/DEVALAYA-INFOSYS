@@ -118,43 +118,61 @@ export default function Footer() {
     href: `/services/${service.slug}`
   }))
 
-  // Map social media links from contactInfo
+  // Create social media links directly from contactInfo
   const socialLinks = [
-    { name: "Facebook", icon: Facebook, href: contactInfo.socialMedia.find(s => s.icon === Facebook)?.url || "#" },
-    { name: "Twitter", icon: Twitter, href: contactInfo.socialMedia.find(s => s.icon === Twitter)?.url || "#" },
-    { name: "LinkedIn", icon: Linkedin, href: contactInfo.socialMedia.find(s => s.icon === Linkedin)?.url || "#" },
-    { name: "Instagram", icon: Instagram, href: contactInfo.socialMedia.find(s => s.icon === Instagram)?.url || "#" },
-    { name: "GitHub", icon: Github, href: "#" }
-  ].filter(link => link.href !== "#" || link.name === "GitHub")
+    ...contactInfo.socialMedia.map(social => {
+      let name = "Social";
+      let icon = social.icon;
+      
+      // Determine the name based on the icon
+      if (social.icon === Facebook) name = "Facebook";
+      if (social.icon === Twitter) name = "Twitter";
+      if (social.icon === Linkedin) name = "LinkedIn";
+      if (social.icon === Instagram) name = "Instagram";
+      
+      return {
+        name,
+        icon,
+        href: social.url
+      };
+    }),
+    // Add GitHub as an additional icon
+    { name: "GitHub", icon: Github, href: "https://github.com" }
+  ]
 
   return (
-    <footer className="bg-navy text-white pt-10 pb-6 border-t-2 border-gold/20 shadow-lg">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+    <footer className="bg-navy text-white pt-5 pb-3 border-t-2 border-gold/20 shadow-lg relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 opacity-30"></div>
+      <div className="absolute bottom-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 opacity-30"></div>
+      <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-gold/10 rounded-full blur-xl opacity-20"></div>
+
+      <div className="container mx-auto px-2 relative z-10">
         {/* Top section with wave divider */}
-        <div className="relative mb-8">
-          <div className="w-full h-1 bg-gradient-to-r from-transparent via-gold/60 to-transparent rounded-full shadow-glow animate-pulse-glow"></div>
+        <div className="relative mb-4">
+          <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-gold/60 to-transparent rounded-full shadow-glow animate-pulse-glow"></div>
         </div>
 
-        {/* Main footer content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 mb-8">
+        {/* Main footer content - more compact with fixed widths */}
+        <div className="flex flex-wrap justify-center">
           {/* Company Info */}
-          <div className="space-y-4 sm:col-span-2 lg:col-span-1 rounded-lg ">
-            <Link href="/" className="inline-block group" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
-              <div className="relative w-auto h-10 group-hover:scale-105 transition-all duration-300 filter hover:drop-shadow-[0_0_8px_rgba(177,132,61,0.5)]">
+          <div className="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4 group">
+            <Link href="/" className="inline-block" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
+              <div className="relative w-auto h-7 group-hover:scale-105 transition-all duration-300 filter hover:drop-shadow-[0_0_8px_rgba(177,132,61,0.5)]">
                 <Image
                   src="/logo.png"
                   alt="Devalaya Infosys Logo"
-                  width={160}
-                  height={48}
+                  width={120}
+                  height={35}
                   className="object-contain"
                   priority
                 />
               </div>
             </Link>
-            <p className="text-gray-300 text-sm md:text-base mt-3 max-w-xs leading-relaxed">
-              Providing innovative IT solutions and services to businesses worldwide. We help transform ideas into powerful digital experiences.
+            <p className="text-gray-300 text-xs mt-2 leading-relaxed border-l-2 border-gold/30 pl-2">
+              Providing innovative IT solutions and services to businesses worldwide.
             </p>
-            <div className="flex flex-nowrap gap-2 mt-4 justify-center sm:justify-start">
+            <div className="flex flex-nowrap gap-1.5 mt-2">
               {socialLinks.map((item) => (
                 <SocialLink
                   key={item.name}
@@ -167,9 +185,12 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="mt-2 sm:mt-0">
-            <FooterSectionHeader title="Quick Links" />
-            <ul className="space-y-2 p-2 rounded-lg bg-navy-light/10">
+          <div className="w-full sm:w-1/2 lg:w-1/5 px-2 mb-4">
+            <h3 className="text-base font-semibold mb-2 text-gold flex items-center">
+              <span className="mr-2">Quick Links</span>
+              <div className="h-px flex-grow bg-gradient-to-r from-gold/50 to-transparent"></div>
+            </h3>
+            <ul className="space-y-0.5 rounded-lg bg-navy-light/5 p-1.5">
               {navigation.map((item) => (
                 <li key={item.name} className="group">
                   <FooterLink href={item.href}>{item.name}</FooterLink>
@@ -179,9 +200,12 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div className="mt-2 sm:mt-0 lg:col-span-2">
-            <FooterSectionHeader title="Our Services" />
-            <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 max-h-[160px] sm:max-h-[180px] overflow-y-auto pr-2 scrollbar-hide rounded-lg p-2 bg-navy-light/10">
+          <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
+            <h3 className="text-base font-semibold mb-2 text-gold flex items-center">
+              <span className="mr-2">Our Services</span>
+              <div className="h-px flex-grow bg-gradient-to-r from-gold/50 to-transparent"></div>
+            </h3>
+            <div className="grid grid-cols-2 gap-x-1 gap-y-0.5 max-h-[120px] overflow-y-auto scrollbar-hide rounded-lg bg-navy-light/5 p-1.5">
               {footerServices.map((item) => (
                 <div key={item.name} className="group">
                   <FooterLink href={item.href}>{item.name}</FooterLink>
@@ -189,20 +213,22 @@ export default function Footer() {
               ))}
 
               {/* Show More Services Link */}
-              <div className="group col-span-2 mt-2 flex justify-center">
+              <div className="group col-span-2 mt-1 flex justify-center">
                 <ViewAllButton href="/services">View All Services</ViewAllButton>
               </div>
             </div>
           </div>
 
           {/* Contact Info */}
-          <div className="mt-2 sm:mt-0">
-            <FooterSectionHeader title="Contact Us" />
-            <ul className="space-y-3 p-2 rounded-lg">
+          <div className="w-full sm:w-1/2 lg:w-1/5 px-2 mb-4">
+            <h3 className="text-base font-semibold mb-2 text-gold flex items-center">
+              <span className="mr-2">Contact Us</span>
+              <div className="h-px flex-grow bg-gradient-to-r from-gold/50 to-transparent"></div>
+            </h3>
+            <ul className="space-y-1.5 bg-navy-light/5 p-1.5 rounded-lg">
               <ContactItem icon={MapPin}>
                 {contactInfo.address.line1}<br />
-                {contactInfo.address.line2}<br />
-                {contactInfo.address.city} {contactInfo.address.postalCode}, {contactInfo.address.country}
+                {contactInfo.address.city}
               </ContactItem>
               <ContactItem icon={Phone} href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}>
                 {contactInfo.phone}
@@ -215,14 +241,14 @@ export default function Footer() {
         </div>
 
         {/* Divider with gradient */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-600 to-transparent my-5"></div>
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/30 to-transparent my-2"></div>
 
         {/* Bottom section */}
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-xs sm:text-sm text-center md:text-left">
+        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+          <p className="text-gray-400 text-xs">
             © {currentYear} Devalaya Infosys. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-5 mt-3 md:mt-0">
+          <div className="flex flex-wrap justify-center gap-2 mt-1 md:mt-0">
             {[
               { name: "Privacy Policy", href: "/privacy-policy" },
               { name: "Terms of Service", href: "/terms-of-service" },
