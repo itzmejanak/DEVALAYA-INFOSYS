@@ -3,11 +3,14 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { Providers } from "./providers"
 
-
 export const metadata: Metadata = {
   title: "DEVALAYA INFOSYS",
   description: "Professional IT Solutions and Services",
-    generator: 'janak'
+  generator: 'janak',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  }
 }
 
 export default function RootLayout({

@@ -83,8 +83,8 @@ export const contactInfo = {
     mapUrl: "https://maps.app.goo.gl/Ld9Eo9Eo9Eo9Eo9E6",
     embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.2608206374707!2d85.31292287549955!3d27.71646797619861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb190a74aa1f23%3A0x74ebef82ad0a0fee!2sCity%20Square%20Mall!5e0!3m2!1sen!2sus!4v1718017842037!5m2!1sen!2sus"
   },
-  phone: "+977 980-2356892",
-  email: "info@devalayainfosys.com",
+  phone: "+977 976-3373393",
+  email: "info.devalayainfosys@gmail.com",
   website: {
     url: "https://citysquare.com.np",
     display: "citysquare.com.np"
