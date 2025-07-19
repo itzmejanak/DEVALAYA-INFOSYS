@@ -33,4 +33,3 @@ jobs:
           protocol: ftp
           port: 21
           server-dir: ./   # ← everything will land in /home/devalay1/devalayaweb/
-          local-dir: ./out
