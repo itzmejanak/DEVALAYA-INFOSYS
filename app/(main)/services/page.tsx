@@ -1,19 +1,51 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { services, serviceCategories } from "@/lib/services-data"
+import { getServices, getServiceCategories } from "@/lib/services-data"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import LoadingIndicator from "@/components/loading-indicator"
 
 export default function ServicesPage() {
   const [activeCategory, setActiveCategory] = useState("all")
+  const [services, setServices] = useState<any[]>([]);
+  const [serviceCategories, setServiceCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [servicesData, categoriesData] = await Promise.all([
+          getServices(),
+          getServiceCategories()
+        ]);
+        
+        setServices(servicesData);
+        setServiceCategories(categoriesData);
+      } catch (error) {
+        console.error('Error fetching services data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <LoadingIndicator />
+      </div>
+    );
+  }
 
   // Filter services based on active category
   const filteredServices = activeCategory === "all" 
     ? services 
-    : services.filter(service => {
+    : services.filter((service: any) => {
         // This is a simple filtering logic - you might want to enhance this
         // based on your specific categorization needs
         const title = service.title.toLowerCase()
@@ -68,7 +100,7 @@ export default function ServicesPage() {
                       {service.description}
                     </CardDescription>
                     <div className="space-y-2">
-                      {service.features.slice(0, 2).map((feature, idx) => (
+                      {service.features.slice(0, 2).map((feature: string, idx: number) => (
                         <div key={idx} className="flex items-start">
                           <div className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gold/20 flex items-center justify-center mt-0.5">
                             <span className="text-gold text-xs">✓</span>

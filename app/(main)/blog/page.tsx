@@ -8,10 +8,12 @@ import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { BookOpen, Calendar, User, ArrowRight, Sparkles, Clock, X } from 'lucide-react';
-import { blogHero } from '@/lib/data';
+import { getBlogHero } from '@/lib/data';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import DataLoadingIndicator from '@/components/data-loading-indicator';
+import { withMinimumLoadingTime, LOADING_TIMES } from '@/lib/loading-utils';
 
 interface Blog {
   _id: string;
@@ -27,21 +29,33 @@ interface Blog {
 
 export default function BlogPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [blogHero, setBlogHero] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
   const [expandedBlog, setExpandedBlog] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/blogs');
-        if (!response.ok) {
-          throw new Error('Failed to fetch blogs');
-        }
-        const data = await response.json();
-        setBlogs(data);
+        // Use minimum loading time utility to ensure loading shows for at least 1.5 seconds
+        await withMinimumLoadingTime(async () => {
+          const [blogsResponse, heroData] = await Promise.all([
+            fetch('/api/blogs'),
+            getBlogHero()
+          ]);
+          
+          if (!blogsResponse.ok) {
+            throw new Error('Failed to fetch blogs');
+          }
+          
+          const blogsData = await blogsResponse.json();
+          setBlogs(blogsData);
+          setBlogHero(heroData);
+        }, LOADING_TIMES.SLOW); // Show loading for minimum 1.2 seconds
+        
       } catch (error) {
+        console.error('Error fetching blog data:', error);
         toast({
           title: 'Error',
           description: 'Failed to load blog posts',
@@ -52,7 +66,7 @@ export default function BlogPage() {
       }
     };
 
-    fetchBlogs();
+    fetchData();
   }, [toast]);
 
   const toggleBlogExpansion = (blogId: string) => {
@@ -68,7 +82,26 @@ export default function BlogPage() {
     }
   };
 
-  // Loading state is now handled by loading.tsx
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <DataLoadingIndicator 
+          message="Loading blog posts..." 
+          size="lg" 
+        />
+      </div>
+    );
+  }
+
+  if (!blogHero) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-500">Unable to load page data</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">

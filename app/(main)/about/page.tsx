@@ -1,11 +1,64 @@
-import React from "react"
+"use client"
+
+import React, { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Mail, Linkedin, Github, Award, Users, Target, ChevronRight, Sparkles, Clock } from "lucide-react"
-import { teamMembers, companyValues, aboutHero, companyStory, companyStats } from "@/lib/data"
+import { getTeamMembers, getCompanyValues, getAboutHero, getCompanyStory, getCompanyStats } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import LoadingIndicator from "@/components/loading-indicator"
 
 export default function AboutPage() {
+  const [teamMembers, setTeamMembers] = useState<any[]>([]);
+  const [companyValues, setCompanyValues] = useState<any[]>([]);
+  const [aboutHero, setAboutHero] = useState<any>(null);
+  const [companyStory, setCompanyStory] = useState<any>(null);
+  const [companyStats, setCompanyStats] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [teamData, valuesData, heroData, storyData, statsData] = await Promise.all([
+          getTeamMembers(),
+          getCompanyValues(),
+          getAboutHero(),
+          getCompanyStory(),
+          getCompanyStats()
+        ]);
+
+        setTeamMembers(teamData);
+        setCompanyValues(valuesData);
+        setAboutHero(heroData);
+        setCompanyStory(storyData);
+        setCompanyStats(statsData);
+      } catch (error) {
+        console.error('Error fetching about page data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (!aboutHero || !companyStory || !companyStats) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-500">Unable to load page data</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -19,7 +72,7 @@ export default function AboutPage() {
             <span>{aboutHero.subtitle}</span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 text-black tracking-tight">
-            {aboutHero.title.split(" ").map((word, index, array) => (
+            {aboutHero.title.split(" ").map((word: string, index: number, array: string[]) => (
               <React.Fragment key={index}>
                 {index === array.length - 1 ? (
                   <span className="text-gold relative inline-block">{word}<span className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-gold rounded-full"></span></span>
@@ -34,13 +87,13 @@ export default function AboutPage() {
           </p>
           <div className="w-24 sm:w-32 h-0.5 sm:h-1 bg-gradient-to-r from-gold/30 via-gold to-gold/30 mx-auto rounded-full"></div>
         </div>
-        </section>
+      </section>
 
       {/* Company Story */}
       <section className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute right-0 top-1/4 w-64 h-64 bg-navy/5 rounded-full blur-3xl"></div>
         <div className="absolute left-0 bottom-1/4 w-64 h-64 bg-gold/5 rounded-full blur-3xl"></div>
-        
+
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             <div>
@@ -49,7 +102,7 @@ export default function AboutPage() {
                 <span>{companyStory.subtitle}</span>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-navy mb-5 sm:mb-8 tracking-tight">
-                {companyStory.title.split(" ").map((word, index, array) => (
+                {companyStory.title.split(" ").map((word: string, index: number, array: string[]) => (
                   <React.Fragment key={index}>
                     {index === array.length - 1 ? (
                       <span className="relative inline-block">{word}<span className="absolute -bottom-1 sm:-bottom-2 left-0 w-1/3 h-0.5 sm:h-1 bg-gold rounded-full"></span></span>
@@ -60,11 +113,11 @@ export default function AboutPage() {
                 ))}
               </h2>
               <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-600 leading-relaxed">
-                {companyStory.paragraphs.map((paragraph, index) => {
+                {companyStory.paragraphs.map((paragraph: string, index: number) => {
                   const opacity = 0.8 - (index * 0.2);
                   return (
-                    <p 
-                      key={index} 
+                    <p
+                      key={index}
                       className={`relative pl-4 sm:pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-0.5 sm:before:w-1 before:bg-gradient-to-b before:from-gold/${Math.round(opacity * 100)} before:to-${index === companyStory.paragraphs.length - 1 ? 'transparent' : `gold/${Math.round((opacity - 0.2) * 100)}`} before:rounded-full`}
                     >
                       {paragraph}
@@ -75,7 +128,7 @@ export default function AboutPage() {
             </div>
             <div className="bg-gradient-to-br from-cream to-white p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl border border-gold/10 transform hover:scale-[1.02] transition-all duration-500 mt-8 lg:mt-0">
               <div className="grid grid-cols-2 gap-5 sm:gap-8 md:gap-10">
-                {companyStats.stats.map((stat, index) => (
+                {companyStats.stats.map((stat: any, index: number) => (
                   <div key={index} className="text-center group cursor-pointer transform transition-all duration-300 hover:-translate-y-1">
                     <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-navy/5 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-navy/10 transition-colors duration-300">
                       {React.createElement(stat.icon, { className: "h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-gold" })}
@@ -95,7 +148,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-grid-navy/5 bg-[size:30px_30px] opacity-30"></div>
         <div className="absolute left-1/4 bottom-0 w-72 h-72 bg-navy/5 rounded-full blur-3xl"></div>
         <div className="absolute right-1/4 top-0 w-72 h-72 bg-gold/5 rounded-full blur-3xl"></div>
-        
+
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center mb-6 bg-navy/5 px-4 py-2 rounded-full text-navy font-medium">
@@ -109,9 +162,9 @@ export default function AboutPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {companyValues.map((value, index) => (
-              <Card 
-                key={index} 
+            {companyValues.map((value: any, index: number) => (
+              <Card
+                key={index}
                 className={cn(
                   "border-0 shadow-lg group hover:shadow-xl transition-all duration-500 bg-white overflow-hidden",
                   "transform hover:-translate-y-2 hover:border-gold/20 hover:border"
@@ -141,7 +194,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-fixed bg-no-repeat bg-center opacity-[0.02] pointer-events-none"></div>
         <div className="absolute left-0 top-1/3 w-72 h-72 bg-navy/5 rounded-full blur-3xl"></div>
         <div className="absolute right-0 bottom-1/3 w-72 h-72 bg-gold/5 rounded-full blur-3xl"></div>
-        
+
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center mb-6 bg-navy/5 px-4 py-2 rounded-full text-navy font-medium">
@@ -157,146 +210,146 @@ export default function AboutPage() {
           <div className="grid gap-10">
             {/* Featured Team Members (First Row) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {teamMembers.slice(0, 2).map((member, index) => (
-              <Card
-                key={index}
-                className="group overflow-hidden hover:shadow-lg transition-all duration-500 border-0 shadow-md bg-white transform hover:-translate-y-2"
-              >
-                <div className="relative">
-                  <div className="aspect-[3/2] overflow-hidden bg-gradient-to-br from-cream to-white">
-                    <img
-                      src={member.image || "/placeholder.svg"}
-                      alt={member.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center p-6">
-                    <div className="flex gap-3 mb-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      <a
-                        href={`mailto:${member.email}`}
-                        className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
-                      >
-                        <Mail className="h-5 w-5" />
-                      </a>
-                      <a 
-                        href={member.linkedin} 
-                        className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
-                      >
-                        <Linkedin className="h-5 w-5" />
-                      </a>
-                      <a 
-                        href="#" 
-                        className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
-                      >
-                        <Github className="h-5 w-5" />
-                      </a>
+              {teamMembers.slice(0, 2).map((member: any, index: number) => (
+                <Card
+                  key={index}
+                  className="group overflow-hidden hover:shadow-lg transition-all duration-500 border-0 shadow-md bg-white transform hover:-translate-y-2"
+                >
+                  <div className="relative">
+                    <div className="aspect-[3/2] overflow-hidden bg-gradient-to-br from-cream to-white">
+                      <img
+                        src={member.image || "/placeholder.svg"}
+                        alt={member.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center p-6">
+                      <div className="flex gap-3 mb-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <a
+                          href={`mailto:${member.email}`}
+                          className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
+                        >
+                          <Mail className="h-5 w-5" />
+                        </a>
+                        <a
+                          href={member.linkedin}
+                          className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
+                        >
+                          <Linkedin className="h-5 w-5" />
+                        </a>
+                        <a
+                          href="#"
+                          className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
+                        >
+                          <Github className="h-5 w-5" />
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-                
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-navy group-hover:text-gold transition-colors duration-300">{member.name}</h3>
-                      <p className="text-gold font-semibold text-base">{member.role}</p>
-                    </div>
-                    <div className="w-10 h-10 bg-navy/5 rounded-full flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-300">
-                      <ChevronRight className="h-5 w-5 text-gold" />
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-600 mb-6 leading-relaxed text-sm line-clamp-4">{member.bio}</p>
 
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    {member.skills.map((skill, skillIndex) => (
-                      <Badge
-                        key={skillIndex}
-                        variant="secondary"
-                        className="bg-gold/10 text-gold hover:bg-gold hover:text-white transition-colors duration-300 border-0 text-xs py-1"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-navy group-hover:text-gold transition-colors duration-300">{member.name}</h3>
+                        <p className="text-gold font-semibold text-base">{member.role}</p>
+                      </div>
+                      <div className="w-10 h-10 bg-navy/5 rounded-full flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-300">
+                        <ChevronRight className="h-5 w-5 text-gold" />
+                      </div>
+                    </div>
+
+                    <p className="text-gray-600 mb-6 leading-relaxed text-sm line-clamp-4">{member.bio}</p>
+
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {member.skills.map((skill: string, skillIndex: number) => (
+                        <Badge
+                          key={skillIndex}
+                          variant="secondary"
+                          className="bg-gold/10 text-gold hover:bg-gold hover:text-white transition-colors duration-300 border-0 text-xs py-1"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-            
+
             {/* Other Team Members - Smaller cards in rows of 3 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {teamMembers.slice(2).map((member, index) => (
-              <Card
-                key={index + 2}
-                className="group overflow-hidden hover:shadow-md transition-all duration-500 border-0 shadow-sm bg-white transform hover:-translate-y-1"
-              >
-                <div className="relative">
-                  <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-cream to-white">
-                    <img
-                      src={member.image || "/placeholder.svg"}
-                      alt={member.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center p-4">
-                    <div className="flex gap-2 mb-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      <a
-                        href={`mailto:${member.email}`}
-                        className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
-                      >
-                        <Mail className="h-3.5 w-3.5" />
-                      </a>
-                      <a 
-                        href={member.linkedin} 
-                        className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
-                      >
-                        <Linkedin className="h-3.5 w-3.5" />
-                      </a>
-                      <a 
-                        href="#" 
-                        className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
-                      >
-                        <Github className="h-3.5 w-3.5" />
-                      </a>
+              {teamMembers.slice(2).map((member: any, index: number) => (
+                <Card
+                  key={index + 2}
+                  className="group overflow-hidden hover:shadow-md transition-all duration-500 border-0 shadow-sm bg-white transform hover:-translate-y-1"
+                >
+                  <div className="relative">
+                    <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-cream to-white">
+                      <img
+                        src={member.image || "/placeholder.svg"}
+                        alt={member.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center p-4">
+                      <div className="flex gap-2 mb-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <a
+                          href={`mailto:${member.email}`}
+                          className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
+                        >
+                          <Mail className="h-3.5 w-3.5" />
+                        </a>
+                        <a
+                          href={member.linkedin}
+                          className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
+                        >
+                          <Linkedin className="h-3.5 w-3.5" />
+                        </a>
+                        <a
+                          href="#"
+                          className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-gold hover:text-white transition-colors duration-300"
+                        >
+                          <Github className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-                
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="text-base font-bold text-navy group-hover:text-gold transition-colors duration-300">{member.name}</h3>
-                      <p className="text-gold font-semibold text-xs">{member.role}</p>
-                    </div>
-                    <div className="w-7 h-7 bg-navy/5 rounded-full flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-300">
-                      <ChevronRight className="h-3.5 w-3.5 text-gold" />
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-600 text-xs mb-3 leading-relaxed line-clamp-2">{member.bio}</p>
 
-                  <div className="flex flex-wrap gap-1 mb-1">
-                    {member.skills.slice(0, 2).map((skill, skillIndex) => (
-                      <Badge
-                        key={skillIndex}
-                        variant="secondary"
-                        className="bg-gold/10 text-gold hover:bg-gold hover:text-white transition-colors duration-300 border-0 text-[10px] py-0.5 px-1.5"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                    {member.skills.length > 2 && (
-                      <Badge
-                        variant="secondary"
-                        className="bg-navy/5 text-navy hover:bg-navy/10 transition-colors duration-300 border-0 text-[10px] py-0.5 px-1.5"
-                      >
-                        +{member.skills.length - 2}
-                      </Badge>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <CardContent className="p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h3 className="text-base font-bold text-navy group-hover:text-gold transition-colors duration-300">{member.name}</h3>
+                        <p className="text-gold font-semibold text-xs">{member.role}</p>
+                      </div>
+                      <div className="w-7 h-7 bg-navy/5 rounded-full flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-300">
+                        <ChevronRight className="h-3.5 w-3.5 text-gold" />
+                      </div>
+                    </div>
+
+                    <p className="text-gray-600 text-xs mb-3 leading-relaxed line-clamp-2">{member.bio}</p>
+
+                    <div className="flex flex-wrap gap-1 mb-1">
+                      {member.skills.slice(0, 2).map((skill: string, skillIndex: number) => (
+                        <Badge
+                          key={skillIndex}
+                          variant="secondary"
+                          className="bg-gold/10 text-gold hover:bg-gold hover:text-white transition-colors duration-300 border-0 text-[10px] py-0.5 px-1.5"
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                      {member.skills.length > 2 && (
+                        <Badge
+                          variant="secondary"
+                          className="bg-navy/5 text-navy hover:bg-navy/10 transition-colors duration-300 border-0 text-[10px] py-0.5 px-1.5"
+                        >
+                          +{member.skills.length - 2}
+                        </Badge>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </div>

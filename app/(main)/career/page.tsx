@@ -5,8 +5,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, ChevronUp, ChevronRight, Mail, Briefcase, MapPin, Clock, Building, ArrowRight, Sparkles } from 'lucide-react';
-import { careerHero } from '@/lib/data';
+import { getCareerHero } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
+import DataLoadingIndicator from '@/components/data-loading-indicator';
+import { withMinimumLoadingTime, LOADING_TIMES } from '@/lib/loading-utils';
 
 interface Career {
   _id: string;
@@ -26,21 +28,32 @@ interface Career {
 
 export default function CareerPage() {
   const [careers, setCareers] = useState<Career[]>([]);
+  const [careerHero, setCareerHero] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [expandedCareer, setExpandedCareer] = useState<string | null>(null);
   const [expandedHowToApply, setExpandedHowToApply] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchCareers = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/careers');
-        if (!response.ok) {
-          throw new Error('Failed to fetch career opportunities');
-        }
-        const data = await response.json();
-        setCareers(data);
+        // Use minimum loading time to ensure loading shows for at least 1 second
+        await withMinimumLoadingTime(async () => {
+          const [careersResponse, heroData] = await Promise.all([
+            fetch('/api/careers'),
+            getCareerHero()
+          ]);
+          
+          if (!careersResponse.ok) {
+            throw new Error('Failed to fetch career opportunities');
+          }
+          
+          const careersData = await careersResponse.json();
+          setCareers(careersData);
+          setCareerHero(heroData);
+        }, LOADING_TIMES.NORMAL);
       } catch (error) {
+        console.error('Error fetching career data:', error);
         toast({
           title: 'Error',
           description: 'Failed to load career opportunities',
@@ -51,7 +64,7 @@ export default function CareerPage() {
       }
     };
 
-    fetchCareers();
+    fetchData();
   }, [toast]);
 
   const toggleCareerExpansion = (careerId: string) => {
@@ -70,7 +83,26 @@ export default function CareerPage() {
     }
   };
 
-  // Loading state is now handled by loading.tsx
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+          <DataLoadingIndicator 
+          message="Loading..." 
+          size="lg" 
+        />
+      </div>
+    );
+  }
+
+  if (!careerHero) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-500">Unable to load page data</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -86,7 +118,7 @@ export default function CareerPage() {
             <span>{careerHero.subtitle}</span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 text-black tracking-tight">
-            {careerHero.title.split(" ").map((word, index, array) => (
+            {careerHero.title.split(" ").map((word: string, index: number, array: string[]) => (
               <React.Fragment key={index}>
                 {index === array.length - 1 ? (
                   <span className="text-gold relative inline-block">{word}<span className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-0.5 sm:h-1 bg-gold rounded-full"></span></span>

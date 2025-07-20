@@ -3,18 +3,55 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
-import { services, serviceProcess, serviceTestimonials } from "@/lib/services-data"
+import { getServices, getServiceProcess, getServiceTestimonials } from "@/lib/services-data"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { use } from "react"
+import { useState, useEffect } from "react"
+import LoadingIndicator from "@/components/loading-indicator"
 
 export default function ServicePage({ params }: { params: { slug: string } }) {
   // Unwrap params using React.use()
   const { slug } = use(params);
-  
+
+  const [services, setServices] = useState<any[]>([]);
+  const [serviceProcess, setServiceProcess] = useState<any[]>([]);
+  const [serviceTestimonials, setServiceTestimonials] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [servicesData, processData, testimonialsData] = await Promise.all([
+          getServices(),
+          getServiceProcess(),
+          getServiceTestimonials()
+        ]);
+
+        setServices(servicesData);
+        setServiceProcess(processData);
+        setServiceTestimonials(testimonialsData);
+      } catch (error) {
+        console.error('Error fetching service data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
   // Find the service based on the slug
-  const service = services.find(s => s.slug === slug)
+  const service = services.find((s: any) => s.slug === slug)
 
   // If service not found, return 404
   if (!service) {
@@ -23,7 +60,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
 
   // Filter testimonials for this service
   const filteredTestimonials = serviceTestimonials.filter(
-    testimonial => testimonial.service === service.title
+    (testimonial: any) => testimonial.service === service.title
   )
 
   return (
@@ -38,7 +75,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-4 sm:mb-6">{service.title}</h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8">{service.description}</p>
           <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8">
-            {service.technologies.map((tech, index) => (
+            {service.technologies.map((tech: string, index: number) => (
               <span key={index} className="px-2 sm:px-3 py-0.5 sm:py-1 bg-navy/5 text-navy rounded-full text-xs sm:text-sm">
                 {tech}
               </span>
@@ -72,7 +109,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-          {service.features.map((feature, index) => (
+          {service.features.map((feature: string, index: number) => (
             <Card key={index} className="border border-gold/20 hover:border-gold/50 transition-all duration-300">
               <CardContent className="pt-4 sm:pt-6 px-4 sm:px-6">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gold/10 flex items-center justify-center mb-3 sm:mb-4">
@@ -98,7 +135,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {serviceProcess.slice(0, 4).map((step, index) => (
+          {serviceProcess.slice(0, 4).map((step: any, index: number) => (
             <div key={index} className="relative">
               <div className="flex flex-col items-center text-center">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gold/20 flex items-center justify-center mb-3 sm:mb-4 relative z-10">
@@ -129,14 +166,14 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
           <div className="overflow-x-auto pb-2 -mx-4 px-4">
             <TabsList className="grid w-full min-w-[500px] grid-cols-5 mb-6 sm:mb-8">
               <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
-              {service.technologies.slice(0, 4).map((tech, index) => (
+              {service.technologies.slice(0, 4).map((tech: string, index: number) => (
                 <TabsTrigger key={index} value={`tech-${index}`} className="text-xs sm:text-sm whitespace-nowrap">{tech}</TabsTrigger>
               ))}
             </TabsList>
           </div>
           <TabsContent value="overview" className="p-4 sm:p-6 bg-navy/5 rounded-xl">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
-              {service.technologies.map((tech, index) => (
+              {service.technologies.map((tech: string, index: number) => (
                 <div key={index} className="flex flex-col items-center justify-center p-3 sm:p-4 bg-white rounded-lg shadow-sm">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-gold/10 flex items-center justify-center mb-2 sm:mb-3 md:mb-4">
                     <span className="text-gold font-bold text-sm sm:text-base md:text-lg">{tech.charAt(0)}</span>
@@ -146,7 +183,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               ))}
             </div>
           </TabsContent>
-          {service.technologies.slice(0, 4).map((tech, index) => (
+          {service.technologies.slice(0, 4).map((tech: string, index: number) => (
             <TabsContent key={index} value={`tech-${index}`} className="p-4 sm:p-6 bg-navy/5 rounded-xl">
               <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 items-center text-center md:text-left">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0 mx-auto md:mx-0">
@@ -178,13 +215,13 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            {filteredTestimonials.map((testimonial, index) => (
+            {filteredTestimonials.map((testimonial: any, index: number) => (
               <Card key={index} className="border border-gold/20">
                 <CardContent className="pt-4 sm:pt-6 px-4 sm:px-6">
                   <div className="flex items-center mb-3 sm:mb-4">
                     <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden mr-3 sm:mr-4">
-                      <Image 
-                        src={testimonial.image} 
+                      <Image
+                        src={testimonial.image}
                         alt={testimonial.name}
                         fill
                         className="object-cover"

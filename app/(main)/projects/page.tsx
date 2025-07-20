@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Code, ExternalLink, ChevronRight, Globe, Database, Shield, Cpu } from "lucide-react"
-import { projectsHero } from "@/lib/data"
+import { getProjectsHero } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
+import LoadingIndicator from "@/components/loading-indicator"
 
 interface Project {
   _id?: string;
@@ -41,19 +42,27 @@ const getIconComponent = (iconName: string) => {
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [projectsHero, setProjectsHero] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/projects');
-        if (!response.ok) {
+        const [projectsResponse, heroData] = await Promise.all([
+          fetch('/api/projects'),
+          getProjectsHero()
+        ]);
+        
+        if (!projectsResponse.ok) {
           throw new Error('Failed to fetch projects');
         }
-        const data = await response.json();
-        setProjects(data);
+        
+        const projectsData = await projectsResponse.json();
+        setProjects(projectsData);
+        setProjectsHero(heroData);
       } catch (error) {
+        console.error('Error fetching projects data:', error);
         toast({
           title: 'Error',
           description: 'Failed to load projects',
@@ -74,16 +83,23 @@ export default function ProjectsPage() {
       }
     };
 
-    fetchProjects();
+    fetchData();
   }, [toast]);
 
   // Handle loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (!projectsHero) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-gold border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
-          <p className="mt-4 text-navy">Loading projects...</p>
+          <p className="text-gray-500">Unable to load page data</p>
         </div>
       </div>
     );
@@ -105,7 +121,7 @@ export default function ProjectsPage() {
             <span>{projectsHero.subtitle}</span>
           </div>
           <h1 className="text-6xl md:text-8xl font-bold mb-6 text-black tracking-tight">
-            {projectsHero.title.split(" ").map((word, index, array) => (
+            {projectsHero.title.split(" ").map((word: string, index: number, array: string[]) => (
               <React.Fragment key={index}>
                 {index === array.length - 1 ? (
                   <span className="text-gold relative inline-block">

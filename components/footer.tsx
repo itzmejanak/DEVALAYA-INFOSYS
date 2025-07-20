@@ -2,10 +2,49 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { Mail, MapPin, Phone, Facebook, Twitter, Linkedin, Instagram, Github, ChevronRight, ExternalLink } from "lucide-react"
-import { services as allServices } from "@/lib/services-data"
-import { contactInfo } from "@/lib/data"
+import { Mail, MapPin, Phone, ChevronRight, ExternalLink, Facebook, Twitter, Linkedin, Instagram, Github } from "lucide-react"
+import { getServices } from "@/lib/services-data"
+import { getContactInfo } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react"
+
+// Types
+interface Service {
+  title: string;
+  slug: string;
+  icon?: any;
+}
+
+interface ContactInfo {
+  address: {
+    line1: string;
+    line2: string;
+    city: string;
+    postalCode: string;
+    country: string;
+    mapUrl: string;
+    embedUrl: string;
+  };
+  phone: string;
+  email: string;
+  website: {
+    url: string;
+    display: string;
+  };
+  hours: {
+    status: string;
+    closing: string;
+  };
+  socialMedia: Array<{
+    icon: string;
+    url: string;
+  }>;
+  mapEmbed: {
+    src: string;
+    locationName: string;
+    directionsUrl: string;
+  };
+}
 
 // We've added shadow-glow and pulse-glow to tailwind.config.ts
 
@@ -103,6 +142,9 @@ const LegalLink = ({ href, children }: { href: string, children: React.ReactNode
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const [services, setServices] = useState<Service[]>([])
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null)
+  const [loading, setLoading] = useState(true)
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -112,33 +154,81 @@ export default function Footer() {
     { name: "Contact", href: "/contact" },
   ]
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [servicesData, contactData] = await Promise.all([
+          getServices(),
+          getContactInfo()
+        ])
+        setServices(servicesData)
+        setContactInfo(contactData)
+      } catch (error) {
+        console.error('Error fetching footer data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   // Prepare services data for footer display
-  const footerServices = allServices.slice(0, 8).map(service => ({
+  const footerServices = services.slice(0, 8).map((service: Service) => ({
     name: service.title,
     href: `/services/${service.slug}`
   }))
 
-  // Create social media links directly from contactInfo
-  const socialLinks = [
-    ...contactInfo.socialMedia.map(social => {
-      let name = "Social";
-      let icon = social.icon;
-      
-      // Determine the name based on the icon
-      if (social.icon === Facebook) name = "Facebook";
-      if (social.icon === Twitter) name = "Twitter";
-      if (social.icon === Linkedin) name = "LinkedIn";
-      if (social.icon === Instagram) name = "Instagram";
-      
+  // Create social media links from contactInfo
+  const socialLinks = contactInfo ? [
+    ...contactInfo.socialMedia.map((social: { icon: string; url: string }) => {
+      let name = "Social"
+      let IconComponent = Mail // Default icon
+
+      // Map icon names from API to actual Lucide React components
+      switch (social.icon.toLowerCase()) {
+        case 'facebook':
+          name = "Facebook"
+          IconComponent = Facebook
+          break
+        case 'twitter':
+          name = "Twitter"
+          IconComponent = Twitter
+          break
+        case 'linkedin':
+          name = "LinkedIn"
+          IconComponent = Linkedin
+          break
+        case 'instagram':
+          name = "Instagram"
+          IconComponent = Instagram
+          break
+        default:
+          name = "Social"
+          IconComponent = Mail
+      }
+
       return {
         name,
-        icon,
+        icon: IconComponent,
         href: social.url
-      };
+      }
     }),
     // Add GitHub as an additional icon
     { name: "GitHub", icon: Github, href: "https://github.com" }
-  ]
+  ] : []
+
+  if (loading) {
+    return (
+      <footer className="bg-navy text-white pt-5 pb-3 border-t-2 border-gold/20 shadow-lg">
+        <div className="container mx-auto px-2">
+          <div className="flex justify-center items-center py-8">
+            <div className="text-gold">Loading...</div>
+          </div>
+        </div>
+      </footer>
+    )
+  }
 
   return (
     <footer className="bg-navy text-white pt-5 pb-3 border-t-2 border-gold/20 shadow-lg relative overflow-hidden">
@@ -226,16 +316,20 @@ export default function Footer() {
               <div className="h-px flex-grow bg-gradient-to-r from-gold/50 to-transparent"></div>
             </h3>
             <ul className="space-y-1.5 bg-navy-light/5 p-1.5 rounded-lg">
-              <ContactItem icon={MapPin}>
-                {contactInfo.address.line1}<br />
-                {contactInfo.address.city}
-              </ContactItem>
-              <ContactItem icon={Phone} href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}>
-                {contactInfo.phone}
-              </ContactItem>
-              <ContactItem icon={Mail} href={`mailto:${contactInfo.email}`}>
-                {contactInfo.email}
-              </ContactItem>
+              {contactInfo && (
+                <>
+                  <ContactItem icon={MapPin}>
+                    {contactInfo.address.line1}<br />
+                    {contactInfo.address.city}
+                  </ContactItem>
+                  <ContactItem icon={Phone} href={`tel:${contactInfo.phone.replace(/[^0-9+]/g, '')}`}>
+                    {contactInfo.phone}
+                  </ContactItem>
+                  <ContactItem icon={Mail} href={`mailto:${contactInfo.email}`}>
+                    {contactInfo.email}
+                  </ContactItem>
+                </>
+              )}
             </ul>
           </div>
         </div>

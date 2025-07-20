@@ -1,13 +1,14 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { MapPin, Phone, Mail, Clock, Send, ArrowRight, CheckCircle, Globe, HeartHandshake, Facebook, Instagram, Linkedin, Twitter } from "lucide-react"
-import { contactInfo, contactHero } from "@/lib/data"
+import { MapPin, Phone, Mail, Clock, Send, ArrowRight, CheckCircle, Globe, HeartHandshake } from "lucide-react"
+import { getContactInfo, getContactHero } from "@/lib/data"
+import LoadingIndicator from "@/components/loading-indicator"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,29 @@ export default function ContactPage() {
     subject: "",
     message: "",
   })
+  const [contactInfo, setContactInfo] = useState<any>(null);
+  const [contactHero, setContactHero] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [contactData, heroData] = await Promise.all([
+          getContactInfo(),
+          getContactHero()
+        ]);
+        
+        setContactInfo(contactData);
+        setContactHero(heroData);
+      } catch (error) {
+        console.error('Error fetching contact page data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,6 +54,24 @@ export default function ContactPage() {
       ...formData,
       [e.target.name]: e.target.value,
     })
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (!contactInfo || !contactHero) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-500">Unable to load page data</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -268,7 +310,7 @@ export default function ContactPage() {
                   <div className="mt-4 sm:mt-6 pt-4 border-t border-navy/10">
                     <h4 className="text-sm sm:text-base font-medium text-navy mb-2 sm:mb-3">Connect With Us</h4>
                     <div className="flex space-x-2 sm:space-x-3">
-                      {contactInfo.socialMedia.map((social, index) => (
+                      {contactInfo.socialMedia.map((social: any, index: number) => (
                         <a
                           key={index}
                           href={social.url}

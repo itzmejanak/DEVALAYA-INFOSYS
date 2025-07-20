@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   description: "Professional IT Solutions and Services",
   generator: 'janak',
   icons: {
-    icon: '/logo.png',
-    apple: '/logo.png',
+    icon: '/bb.png',
+    apple: '/bb.png',
   }
 }
 
