@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Code, Database, Shield, Cpu, Globe, Zap, BarChart, Layers, Smartphone, Cloud, Server, Headphones, Award, Users, Target, Clock } from 'lucide-react';
 
-const API_BASE_URL = 'https://rev-database-git-personalv2-janak-devkotas-projects.vercel.app';
+const API_BASE_URL = 'https://rev-database.vercel.app';
 const DATABASE = 'deva';
 const API_KEY = 'rdp_82b1f4a7c3e54dbea67f8d9b05f91e2a';
 
