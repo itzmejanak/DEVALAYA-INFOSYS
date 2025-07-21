@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Code, Database, Shield, Cpu, Globe, Zap, BarChart, Layers, Smartphone, Cloud, Server, Headphones, Award, Users, Target, Clock } from 'lucide-react';
 
-const API_BASE_URL = 'https://rev-database.vercel.app';
+const API_BASE_URL = 'https://rev-database.vercel.app/api/collections';
 const DATABASE = 'deva';
 const API_KEY = 'rdp_82b1f4a7c3e54dbea67f8d9b05f91e2a';
 
@@ -38,6 +37,8 @@ export async function GET(
       );
     }
 
+    console.log(`Fetching ${collection} from ${API_BASE_URL}/${collection}?db=${DATABASE}`);
+
     const response = await fetch(`${API_BASE_URL}/${collection}?db=${DATABASE}`, {
       method: 'GET',
       headers: {
@@ -48,15 +49,32 @@ export async function GET(
       cache: 'no-cache',
     });
 
+    console.log(`Response status for ${collection}: ${response.status}`);
+
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`HTTP error for ${collection}! status: ${response.status}, body: ${errorText}`);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const result = await response.json();
+    console.log(`Response data for ${collection}:`, result);
+    
+    // Handle different response structures
+    let data = [];
+    if (Array.isArray(result)) {
+      data = result;
+    } else if (result.data && Array.isArray(result.data)) {
+      data = result.data;
+    } else if (result.data) {
+      data = [result.data];
+    } else if (typeof result === 'object' && result !== null) {
+      data = [result];
+    }
     
     return NextResponse.json({
       success: true,
-      data: result.data || [],
+      data: data,
       collection: collection
     });
 
