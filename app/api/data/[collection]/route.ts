@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const API_BASE_URL = 'https://rev-database.vercel.app/api/collections';
+const API_BASE_URL = 'https://rev-database-v2.vercel.app/api/collections';
 const DATABASE = 'deva';
-const API_KEY = 'rdp_82b1f4a7c3e54dbea67f8d9b05f91e2a';
+const API_KEY = 'bWRjM202MXVyZ3J4ZXBnOTdvbDoxNzUzMDQxNDQ3NzE1';
 
 export async function GET(
   request: NextRequest,
@@ -27,7 +27,8 @@ export async function GET(
       'bloghero',
       'careerhero',
       'projectshero',
-      'projects'
+      'projects',
+      'websitetemplates'
     ];
 
     if (!allowedCollections.includes(collection)) {

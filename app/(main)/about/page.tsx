@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge"
 import { Mail, Linkedin, Github, Award, Users, Target, ChevronRight, Sparkles, Clock } from "lucide-react"
 import { getTeamMembers, getCompanyValues, getAboutHero, getCompanyStory, getCompanyStats } from "@/lib/data"
 import { cn } from "@/lib/utils"
-import LoadingIndicator from "@/components/loading-indicator"
+import DataLoadingIndicator from "@/components/data-loading-indicator"
+import { withMinimumLoadingTime, LOADING_TIMES } from "@/lib/loading-utils"
 
 export default function AboutPage() {
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
@@ -19,19 +20,22 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [teamData, valuesData, heroData, storyData, statsData] = await Promise.all([
-          getTeamMembers(),
-          getCompanyValues(),
-          getAboutHero(),
-          getCompanyStory(),
-          getCompanyStats()
-        ]);
+        // Use minimum loading time to ensure loading shows for at least 1.2 seconds
+        await withMinimumLoadingTime(async () => {
+          const [teamData, valuesData, heroData, storyData, statsData] = await Promise.all([
+            getTeamMembers(),
+            getCompanyValues(),
+            getAboutHero(),
+            getCompanyStory(),
+            getCompanyStats()
+          ]);
 
-        setTeamMembers(teamData);
-        setCompanyValues(valuesData);
-        setAboutHero(heroData);
-        setCompanyStory(storyData);
-        setCompanyStats(statsData);
+          setTeamMembers(teamData);
+          setCompanyValues(valuesData);
+          setAboutHero(heroData);
+          setCompanyStory(storyData);
+          setCompanyStats(statsData);
+        }, LOADING_TIMES.NORMAL); // Show loading for minimum 1 second
       } catch (error) {
         console.error('Error fetching about page data:', error);
       } finally {
@@ -45,7 +49,10 @@ export default function AboutPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <LoadingIndicator />
+        <DataLoadingIndicator
+          message="Loading about page..."
+          size="lg"
+        />
       </div>
     );
   }

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 import { getServices } from '@/lib/services-data';
-import { getCompanyStats } from '@/lib/data';
+import { getCompanyStats, getWebsiteTemplates } from '@/lib/data';
 import { IProject } from '@/models/Project';
 import React from 'react';
 import DataLoadingIndicator from '@/components/data-loading-indicator';
@@ -892,6 +892,27 @@ const StatsSection = () => {
 };
 
 const TemplatesSection = () => {
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        // Use minimum loading time to ensure loading shows for at least 1 second
+        await withMinimumLoadingTime(async () => {
+          const templatesData = await getWebsiteTemplates();
+          setTemplates(templatesData);
+        }, LOADING_TIMES.NORMAL);
+      } catch (error) {
+        console.error('Error fetching templates:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTemplates();
+  }, []);
+
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
       {/* Enhanced Background elements */}
@@ -935,89 +956,61 @@ const TemplatesSection = () => {
           </p>
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeIn}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12"
-        >
-          {/* Enhanced Template Preview 1 */}
-          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group border border-navy/10 hover:border-gold/30 relative overflow-hidden">
-            {/* Card glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-gold/5 via-transparent to-navy/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <DataLoadingIndicator message="Loading templates..." size="md" />
+          </div>
+        ) : (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeIn}
+            className="grid grid-cols-1 md:grid-cols-2 gap-12"
+          >
+            {templates.map((template, index) => (
+              <div key={index} className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group border border-navy/10 hover:border-gold/30 relative overflow-hidden">
+                {/* Card glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-gold/5 via-transparent to-navy/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-            <div className="relative h-64 w-full overflow-hidden rounded-xl mb-6 border border-navy/10 group-hover:border-gold/20 transition-colors shadow-lg">
-              <Image
-                src="/placeholder.jpg"
-                alt="Business Template"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/50 to-transparent flex items-end p-6">
-                <div className="transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
-                  <h3 className="text-white text-xl font-semibold mb-2">Business Template</h3>
-                  <p className="text-white/90 text-sm">Perfect for corporate and professional services</p>
+                <div className="relative h-64 w-full overflow-hidden rounded-xl mb-6 border border-navy/10 group-hover:border-gold/20 transition-colors shadow-lg">
+                  <Image
+                    src={template.image || "/placeholder.jpg"}
+                    alt={template.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/50 to-transparent flex items-end p-6">
+                    <div className="transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
+                      <h3 className="text-white text-xl font-semibold mb-2">{template.title}</h3>
+                      <p className="text-white/90 text-sm">{template.description}</p>
+                    </div>
+                  </div>
+
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                <div className="flex justify-between items-center relative z-10">
+                  <div className="flex gap-2">
+                    {template.tags && template.tags.map((tag: string, i: number) => (
+                      <Badge key={i} className="bg-navy/10 text-navy hover:bg-navy/20 border-none transition-all duration-300 hover:scale-105">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <Button
+                    size="sm"
+                    className="bg-gold hover:bg-gold/90 text-navy transition-all duration-300 transform group-hover:scale-110 shadow-lg hover:shadow-xl"
+                    onClick={() => window.open(template.demoUrl || '#', '_blank')}
+                  >
+                    View Demo
+                  </Button>
                 </div>
               </div>
-
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-
-            <div className="flex justify-between items-center relative z-10">
-              <div className="flex gap-2">
-                <Badge className="bg-navy/10 text-navy hover:bg-navy/20 border-none transition-all duration-300 hover:scale-105">
-                  Corporate
-                </Badge>
-                <Badge className="bg-navy/10 text-navy hover:bg-navy/20 border-none transition-all duration-300 hover:scale-105">
-                  Professional
-                </Badge>
-              </div>
-              <Button size="sm" className="bg-gold hover:bg-gold/90 text-navy transition-all duration-300 transform group-hover:scale-110 shadow-lg hover:shadow-xl">
-                View Demo
-              </Button>
-            </div>
-          </div>
-
-          {/* Enhanced Template Preview 2 */}
-          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 group border border-navy/10 hover:border-gold/30 relative overflow-hidden">
-            {/* Card glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-navy/5 via-transparent to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-            <div className="relative h-64 w-full overflow-hidden rounded-xl mb-6 border border-navy/10 group-hover:border-gold/20 transition-colors shadow-lg">
-              <Image
-                src="/placeholder.jpg"
-                alt="E-commerce Template"
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/50 to-transparent flex items-end p-6">
-                <div className="transform transition-transform duration-500 group-hover:translate-y-0 translate-y-2">
-                  <h3 className="text-white text-xl font-semibold mb-2">E-commerce Template</h3>
-                  <p className="text-white/90 text-sm">Fully-featured online store solution</p>
-                </div>
-              </div>
-
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-
-            <div className="flex justify-between items-center relative z-10">
-              <div className="flex gap-2">
-                <Badge className="bg-navy/10 text-navy hover:bg-navy/20 border-none transition-all duration-300 hover:scale-105">
-                  E-commerce
-                </Badge>
-                <Badge className="bg-navy/10 text-navy hover:bg-navy/20 border-none transition-all duration-300 hover:scale-105">
-                  Shop
-                </Badge>
-              </div>
-              <Button size="sm" className="bg-gold hover:bg-gold/90 text-navy transition-all duration-300 transform group-hover:scale-110 shadow-lg hover:shadow-xl">
-                View Demo
-              </Button>
-            </div>
-          </div>
-        </motion.div>
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   );

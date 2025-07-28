@@ -1,4 +1,4 @@
-import { Award, Users, Target, Zap, Star, Clock, Code, Globe, Database, Shield, Cpu } from "lucide-react"
+import { Award, Users, Target, Zap, Star, Clock, Code, Globe, Database, Shield, Cpu, ShoppingCart, Layout } from "lucide-react"
 
 // Icon mapping
 const iconMap: { [key: string]: any } = {
@@ -12,7 +12,9 @@ const iconMap: { [key: string]: any } = {
   Globe,
   Database,
   Shield,
-  Cpu
+  Cpu,
+  ShoppingCart,
+  Layout
 };
 
 // Generic fetch function using internal API route
@@ -118,5 +120,14 @@ export async function getProjects() {
   return data.map((project: any) => ({
     ...project,
     icon: iconMap[project.iconName || project.icon] || Code
+  }));
+}
+
+// Website Templates Data
+export async function getWebsiteTemplates() {
+  const data = await fetchCollection('websitetemplates');
+  return data.map((template: any) => ({
+    ...template,
+    icon: iconMap[template.iconName || template.icon] || Layout
   }));
 }
