@@ -148,11 +148,11 @@ export default function Navigation() {
             ))}
             
             <div className="ml-4 pl-4 border-l border-gold/20">
-              <Link href="/contact">
+              <a href="https://institute.devalayainfosys.com" target="_blank" rel="noopener noreferrer">
                 <Button size="sm" className="bg-gold hover:bg-gold/90 text-white px-4 py-2.5 text-lg font-medium shadow-sm hover:shadow-md transition-all duration-200 rounded-md">
-                  Get in Touch
+                  Institute
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -218,11 +218,11 @@ export default function Navigation() {
             ))}
             
             <div className="pt-3 mt-3 border-t border-gold/10">
-              <Link href="/contact" onClick={() => setIsOpen(false)}>
+              <a href="https://institute.devalayainfosys.com" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
                 <Button size="sm" className="w-full bg-gold hover:bg-gold/90 text-white text-base font-medium rounded-md py-3">
-                  Get in Touch
+                  Institute
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>

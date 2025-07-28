@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const API_BASE_URL = 'https://rev-database-v2.vercel.app/api/collections';
 const DATABASE = 'deva';
-const API_KEY = 'bWRjM202MXVyZ3J4ZXBnOTdvbDoxNzUzMDQxNDQ3NzE1';
+const API_KEY = 'bWRjMzgzbHA3cXZnMGZ4YmdqczoxNzUzMDQwNzkxMzU4';
 
 export async function GET(
   request: NextRequest,
@@ -28,17 +28,17 @@ export async function GET(
       'careerhero',
       'projectshero',
       'projects',
-      'websitetemplates'
+      'websitetemplates',
+      'adsdata'
     ];
 
     if (!allowedCollections.includes(collection)) {
+      console.log(`❌ ${collection} - not found`);
       return NextResponse.json(
         { error: 'Invalid collection name' },
         { status: 400 }
       );
     }
-
-    console.log(`Fetching ${collection} from ${API_BASE_URL}/${collection}?db=${DATABASE}`);
 
     const response = await fetch(`${API_BASE_URL}/${collection}?db=${DATABASE}`, {
       method: 'GET',
@@ -50,16 +50,13 @@ export async function GET(
       cache: 'no-cache',
     });
 
-    console.log(`Response status for ${collection}: ${response.status}`);
-
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`HTTP error for ${collection}! status: ${response.status}, body: ${errorText}`);
+      console.log(`❌ ${collection} - not found`);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const result = await response.json();
-    console.log(`Response data for ${collection}:`, result);
+    console.log(`✅ ${collection} - found`);
     
     // Handle different response structures
     let data = [];
@@ -81,7 +78,7 @@ export async function GET(
 
   } catch (error) {
     const { collection } = await params;
-    console.error(`Error fetching ${collection}:`, error);
+    console.log(`❌ ${collection} - not found`);
     
     return NextResponse.json(
       { 

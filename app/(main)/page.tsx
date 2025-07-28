@@ -1066,16 +1066,16 @@ const CTASection = () => {
             Let's work together to create innovative solutions that drive your business forward
           </p>
 
-          <Link href="/contact" passHref>
+          <a href="https://institute.devalayainfosys.com" target="_blank" rel="noopener noreferrer">
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-white/30 text-navy bg-gold hover:bg-white hover:text-navy transition-all duration-300 transform hover:translate-y-[-3px] hover:scale-105 backdrop-blur-sm shadow-xl px-6 py-3 rounded-full group"
+              className="border-2 border-white/30 text-navy bg-gold hover:bg-white hover:text-navy transition-all duration-300 transform hover:translate-y-[-3px] hover:scale-105 backdrop-blur-sm shadow-xl px-8 py-4 rounded-full group font-semibold text-lg"
             >
-              Get in Touch
-              <ArrowUpRight className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+              Institute
+              <ArrowUpRight className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
             </Button>
-          </Link>
+          </a>
         </motion.div>
       </div>
     </section>

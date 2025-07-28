@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
 import { Providers } from "./providers"
+import AdsOverlayWrapper from '@/components/ads-overlay-wrapper';
 
 export const metadata: Metadata = {
   title: "DEVALAYA INFOSYS",
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`bg-white`} suppressHydrationWarning={true}>
         <Providers>
+        <AdsOverlayWrapper />
           {/* Navigation component will be handled by individual layouts */}
           <main>{children}</main>
         </Providers>

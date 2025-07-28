@@ -132,11 +132,11 @@ export default function ServicesPage() {
         <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto">
           Our team of experts is ready to help you achieve your business goals with our comprehensive IT services.
         </p>
-        <Link href="/contact">
+        <a href="https://institute.devalayainfosys.com" target="_blank" rel="noopener noreferrer">
           <Button className="bg-gold hover:bg-gold/90 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg w-full sm:w-auto max-w-xs">
-            Get in Touch
+            Institute
           </Button>
-        </Link>
+        </a>
       </div>
     </div>
   )
