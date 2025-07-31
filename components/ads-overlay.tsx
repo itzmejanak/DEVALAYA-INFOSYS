@@ -20,6 +20,7 @@ export default function AdsOverlay() {
   const [currentAd, setCurrentAd] = useState<AdsData | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
 
   useEffect(() => {
     const fetchAdsData = async () => {
@@ -58,8 +59,32 @@ export default function AdsOverlay() {
     fetchAdsData();
   }, []);
 
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    const aspectRatio = img.naturalWidth / img.naturalHeight;
+    const maxWidth = 500;
+    const maxHeight = 400;
+    
+    let width = img.naturalWidth;
+    let height = img.naturalHeight;
+    
+    // Scale down if too large, maintaining aspect ratio
+    if (width > maxWidth) {
+      width = maxWidth;
+      height = width / aspectRatio;
+    }
+    
+    if (height > maxHeight) {
+      height = maxHeight;
+      width = height * aspectRatio;
+    }
+    
+    setImageDimensions({ width, height });
+  };
+
   const handleClose = () => {
     setIsVisible(false);
+    setImageDimensions(null);
   };
 
   const handleAdClick = () => {
@@ -85,112 +110,173 @@ export default function AdsOverlay() {
     <AnimatePresence>
       {isVisible && (
         <div className="fixed inset-0 z-50">
-          {/* Backdrop overlay */}
+          {/* Enhanced backdrop overlay with subtle animation */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/40 to-black/60 backdrop-blur-md"
             onClick={handleClose}
           />
           
           {/* Centered popup container */}
-          <div className="absolute inset-0 flex items-center justify-center p-4">
+          <div className="absolute inset-0 flex items-center justify-center p-6">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.8, y: 30, rotateX: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20, rotateX: -5 }}
               transition={{ 
                 type: "spring", 
-                stiffness: 300, 
-                damping: 25,
-                duration: 0.4 
+                stiffness: 280, 
+                damping: 20,
+                duration: 0.6 
               }}
-              className="w-full max-w-md"
+              className="w-full max-w-lg"
+              style={{ 
+                maxWidth: imageDimensions ? `${imageDimensions.width + 48}px` : '500px'
+              }}
             >
-              <div className="relative bg-background border border-border rounded-2xl shadow-2xl overflow-hidden group">
-                {/* Header with close button */}
-                <div className="relative flex justify-between items-center p-4 bg-card border-b border-border">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-accent rounded-full"></div>
-                    <span className="text-sm font-medium text-muted-foreground">
-                      Sponsored
-                    </span>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={handleClose}
-                    className="h-8 w-8 rounded-lg hover:bg-muted transition-colors"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
+              <div className="relative bg-gradient-to-br from-background via-background to-background/95 border border-border/50 rounded-3xl shadow-2xl overflow-hidden group backdrop-blur-sm">
+                {/* Animated gradient border */}
+                <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-r from-accent via-primary to-accent opacity-60">
+                  <div className="w-full h-full rounded-3xl bg-background"></div>
                 </div>
-
-                {/* Ad content */}
-                <div 
-                  className={`relative ${currentAd.link ? 'cursor-pointer' : ''}`}
-                  onClick={currentAd.link ? handleAdClick : undefined}
-                >
-                  {/* Ad image */}
-                  <div className="relative h-64 w-full overflow-hidden bg-muted">
-                    <Image
-                      src={currentAd.imgUrl}
-                      alt={currentAd.title || "Advertisement"}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 448px) 100vw, 448px"
-                      priority={false}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = '/placeholder.jpg';
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-                    
-                    {currentAd.link && (
-                      <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <ExternalLink className="h-4 w-4 text-foreground" />
+                
+                {/* Content wrapper */}
+                <div className="relative z-10">
+                  {/* Enhanced header with close button */}
+                  <div className="relative flex justify-between items-center px-6 bg-gradient-to-br from-card/80 to-card/60 border-b border-border/30 backdrop-blur-sm">
+                    <div className="flex items-center gap-3">
+                      <div className="relative">
+                        <div className="w-3 h-3 bg-gradient-to-r from-accent to-primary rounded-full animate-pulse"></div>
+                        <div className="absolute inset-0 w-3 h-3 bg-gradient-to-r from-accent to-primary rounded-full animate-ping opacity-40"></div>
                       </div>
-                    )}
+                      <span className="text-sm font-semibold text-muted-foreground tracking-wide">
+                        SPONSORED
+                      </span>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleClose}
+                      className="h-9 w-9 rounded-xl hover:bg-muted/80 transition-all duration-200 hover:scale-105 hover:rotate-90 hover:text-back"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
                   </div>
 
-                  {/* Content area */}
-                  <div className="p-6">
-                    {currentAd.title && (
-                      <h3 className="text-lg font-semibold text-foreground mb-2 line-clamp-2">
-                        {currentAd.title}
-                      </h3>
-                    )}
-                    
-                    {currentAd.desc && (
-                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-4">
-                        {currentAd.desc}
-                      </p>
-                    )}
-
-                    {currentAd.link && (
-                      <Button 
-                        className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-medium transition-all duration-200 hover:shadow-md"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleAdClick();
+                  {/* Ad content */}
+                  <div 
+                    className={`relative ${currentAd.link ? 'cursor-pointer' : ''} overflow-hidden`}
+                    onClick={currentAd.link ? handleAdClick : undefined}
+                  >
+                    {/* Ad image with natural sizing */}
+                    <div 
+                      className="relative w-full overflow-hidden bg-gradient-to-br from-muted/50 to-muted"
+                      style={{
+                        height: imageDimensions ? `${imageDimensions.height}px` : '300px'
+                      }}
+                    >
+                      <Image
+                        src={currentAd.imgUrl}
+                        alt={currentAd.title || "Advertisement"}
+                        fill
+                        className="object-contain transition-all duration-700 ease-out group-hover:scale-[1.02]"
+                        sizes="(max-width: 500px) 100vw, 500px"
+                        priority={false}
+                        onLoad={handleImageLoad}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = '/placeholder.jpg';
                         }}
-                      >
-                        Learn More
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      </Button>
-                    )}
+                      />
+                      
+                      {/* Hover overlay with smooth transition */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      
+                      {currentAd.link && (
+                        <motion.div 
+                          className="absolute top-5 right-5 bg-background/95 backdrop-blur-sm rounded-2xl p-3 shadow-lg"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileHover={{ 
+                            opacity: 1, 
+                            scale: 1.1,
+                            transition: { duration: 0.2 }
+                          }}
+                          animate={{ 
+                            opacity: 0,
+                            scale: 0.9
+                          }}
+                          whileInView={{
+                            opacity: [0, 1, 0],
+                            scale: [0.8, 1, 0.9],
+                            transition: { 
+                              duration: 2,
+                              repeat: Infinity,
+                              repeatDelay: 3
+                            }
+                          }}
+                        >
+                          <ExternalLink className="h-4 w-4 text-foreground" />
+                        </motion.div>
+                      )}
+                    </div>
+
+                    {/* Enhanced content area */}
+                    <div className="px-6 py-2 bg-gradient-to-br from-background to-background/95">
+                      {currentAd.title && (
+                        <motion.h3 
+                          className="text-xl font-bold text-foreground line-clamp-2 leading-tight"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          {currentAd.title}
+                        </motion.h3>
+                      )}
+                      
+                      {currentAd.desc && (
+                        <motion.p 
+                          className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-5"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 }}
+                        >
+                          {currentAd.desc}
+                        </motion.p>
+                      )}
+
+                      {currentAd.link && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.4 }}
+                        >
+                          <Button 
+                            className="w-full bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-accent-foreground font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-accent/25 transform hover:scale-[1.02] rounded-xl py-3"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAdClick();
+                            }}
+                          >
+                            Learn More
+                            <ExternalLink className="ml-2 h-4 w-4" />
+                          </Button>
+                        </motion.div>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                {/* Accent border */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent"></div>
+                {/* Enhanced floating elements */}
+                <div className="absolute -top-2 -left-2 w-4 h-4 bg-accent/20 rounded-full blur-sm"></div>
+                <div className="absolute -bottom-3 -right-3 w-6 h-6 bg-primary/20 rounded-full blur-md"></div>
               </div>
 
-              {/* Subtle shadow */}
-              <div className="absolute -bottom-2 left-4 right-4 h-4 bg-black/10 rounded-full blur-md -z-10"></div>
+              {/* Enhanced shadow with multiple layers */}
+              <div className="absolute -bottom-4 left-6 right-6 h-6 bg-black/15 rounded-full blur-xl -z-10"></div>
+              <div className="absolute -bottom-2 left-8 right-8 h-3 bg-black/20 rounded-full blur-lg -z-10"></div>
             </motion.div>
           </div>
         </div>

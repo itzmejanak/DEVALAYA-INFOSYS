@@ -169,6 +169,23 @@ body {
   animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
+/* 3D Card Flip Effects */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
 /* Markdown content styling */
 .markdown-content {
   @apply text-foreground;
