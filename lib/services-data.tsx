@@ -1,4 +1,5 @@
 import { Code, Database, Shield, Cpu, Globe, Zap, BarChart, Layers, Smartphone, Cloud, Server, Headphones } from "lucide-react";
+import devaData from './data/deva.json';
 
 // Icon mapping for services
 const iconMap: { [key: string]: any } = {
@@ -16,7 +17,7 @@ const iconMap: { [key: string]: any } = {
   Headphones
 };
 
-// Generic fetch function using internal API route
+// Generic fetch function using internal API route with fallback to static data
 async function fetchCollection(collectionName: string) {
   try {
     const response = await fetch(`/api/data/${collectionName}`, {
@@ -33,38 +34,41 @@ async function fetchCollection(collectionName: string) {
     
     const result = await response.json();
     
-    if (!result.success) {
-      throw new Error(result.error || 'Failed to fetch data');
+    if (!result.success || !result.data || result.data.length === 0) {
+      throw new Error(result.error || 'No data found');
     }
     
-    return result.data || [];
+    return result.data;
   } catch (error) {
-    console.error(`Error fetching ${collectionName}:`, error);
-    // Return fallback data or empty array
-    return [];
+    console.error(`Error fetching ${collectionName}, falling back to static data:`, error);
+    // Fallback to static JSON data
+    return devaData.collections[collectionName as keyof typeof devaData.collections] || [];
   }
 }
 
 // Services Data
 export async function getServices() {
   const data = await fetchCollection('services');
-  return data.map((service: any) => ({
+  return Array.isArray(data) ? data.map((service: any) => ({
     ...service,
     icon: iconMap[service.iconName || service.icon] || Code
-  }));
+  })) : [];
 }
 
 // Service Categories for filtering
 export async function getServiceCategories() {
-  return await fetchCollection('servicecategories');
+  const data = await fetchCollection('servicecategories');
+  return Array.isArray(data) ? data : [];
 }
 
 // Testimonials about services
 export async function getServiceTestimonials() {
-  return await fetchCollection('servicetestimonials');
+  const data = await fetchCollection('servicetestimonials');
+  return Array.isArray(data) ? data : [];
 }
 
 // Service Process Steps
 export async function getServiceProcess() {
-  return await fetchCollection('serviceprocess');
+  const data = await fetchCollection('serviceprocess');
+  return Array.isArray(data) ? data : [];
 }

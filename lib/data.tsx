@@ -1,4 +1,5 @@
 import { Award, Users, Target, Zap, Star, Clock, Code, Globe, Database, Shield, Cpu, ShoppingCart, Layout } from "lucide-react"
+import devaData from './data/deva.json';
 
 // Icon mapping
 const iconMap: { [key: string]: any } = {
@@ -17,7 +18,7 @@ const iconMap: { [key: string]: any } = {
   Layout
 };
 
-// Generic fetch function using internal API route
+// Generic fetch function using internal API route with fallback to static data
 async function fetchCollection(collectionName: string) {
   try {
     const response = await fetch(`/api/data/${collectionName}`, {
@@ -34,36 +35,37 @@ async function fetchCollection(collectionName: string) {
 
     const result = await response.json();
 
-    if (!result.success) {
-      throw new Error(result.error || 'Failed to fetch data');
+    if (!result.success || !result.data || result.data.length === 0) {
+      throw new Error(result.error || 'No data found');
     }
 
-    return result.data || [];
+    return result.data;
   } catch (error) {
-    console.error(`Error fetching ${collectionName}:`, error);
-    // Return fallback data or empty array
-    return [];
+    console.error(`Error fetching ${collectionName}, falling back to static data:`, error);
+    // Fallback to static JSON data
+    return devaData.collections[collectionName as keyof typeof devaData.collections] || [];
   }
 }
 
-// For single item collections, return the first item
+// For single item collections, return the first item with fallback
 async function fetchSingleCollection(collectionName: string) {
   const data = await fetchCollection(collectionName);
-  return data[0] || {};
+  return Array.isArray(data) && data.length > 0 ? data[0] : {};
 }
 
 // Team Members Data
 export async function getTeamMembers() {
-  return await fetchCollection('teammembers');
+  const data = await fetchCollection('teammembers');
+  return Array.isArray(data) ? data : [];
 }
 
 // Company Values
 export async function getCompanyValues() {
   const data = await fetchCollection('companyvalues');
-  return data.map((value: any) => ({
+  return Array.isArray(data) ? data.map((value: any) => ({
     ...value,
     icon: iconMap[value.iconName || value.icon] || Target
-  }));
+  })) : [];
 }
 
 // Contact Information
@@ -77,10 +79,10 @@ export async function getContactInfo() {
 export async function getCompanyStats() {
   const data = await fetchCollection('companystats');
   return {
-    stats: data.map((stat: any) => ({
+    stats: Array.isArray(data) ? data.map((stat: any) => ({
       ...stat,
       icon: iconMap[stat.iconName || stat.icon] || Target
-    }))
+    })) : []
   };
 }
 
@@ -117,17 +119,17 @@ export async function getProjectsHero() {
 // Projects Data
 export async function getProjects() {
   const data = await fetchCollection('projects');
-  return data.map((project: any) => ({
+  return Array.isArray(data) ? data.map((project: any) => ({
     ...project,
     icon: iconMap[project.iconName || project.icon] || Code
-  }));
+  })) : [];
 }
 
 // Website Templates Data
 export async function getWebsiteTemplates() {
   const data = await fetchCollection('websitetemplates');
-  return data.map((template: any) => ({
+  return Array.isArray(data) ? data.map((template: any) => ({
     ...template,
     icon: iconMap[template.iconName || template.icon] || Layout
-  }));
+  })) : [];
 }

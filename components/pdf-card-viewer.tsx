@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { 
-  Download, 
-  Share2, 
+import {
+  Download,
+  Share2,
   Phone,
   Mail,
   MapPin
@@ -72,9 +72,10 @@ export default function PDFCardViewer({ data }: PDFCardViewerProps) {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-gray-50 via-white to-gray-50 p-2 sm:p-4 overflow-hidden">
-      {/* PDF Card Container */}
-      <div className="flex-1 flex items-center justify-center min-h-0">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-50 p-2 sm:p-4">
+      {/* Card and Buttons Container */}
+      <div className="flex flex-col items-center gap-4 sm:gap-6 w-full">
+        {/* PDF Card Container */}
         <div className="relative w-full max-w-4xl aspect-[8/5] bg-white rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden">
           {isMobile ? (
             /* Mobile Fallback - Recreated Card Design */
@@ -129,9 +130,9 @@ export default function PDFCardViewer({ data }: PDFCardViewerProps) {
                 {/* Company logo area */}
                 <div className="absolute bottom-3 right-3 sm:bottom-6 sm:right-6">
                   <div className="flex items-center space-x-2">
-                    <img 
-                      src="/bb.png" 
-                      alt="Devalaya Infosys Logo" 
+                    <img
+                      src="/bb.png"
+                      alt="Devalaya Infosys Logo"
                       className="w-8 h-8 sm:w-12 sm:h-12 object-contain"
                     />
                     <div className="text-left">
@@ -160,47 +161,49 @@ export default function PDFCardViewer({ data }: PDFCardViewerProps) {
             />
           )}
         </div>
-      </div>
 
-      {/* Action Buttons */}
-      <div className="flex-shrink-0 px-2 sm:px-4 py-2 sm:py-6">
-        <div className="grid grid-cols-2 sm:flex gap-1 sm:gap-3 max-w-4xl mx-auto">
+        {/* Action Buttons - Positioned directly below card */}
+        <div className="flex justify-center gap-3 sm:gap-4">
+          {/* Call Button */}
           <Button
             onClick={handleCall}
-            className="flex-1 min-w-0 sm:min-w-[120px] bg-blue-900 hover:bg-blue-800 text-white text-xs sm:text-base py-1.5 sm:py-3 h-8 sm:h-auto"
+            size="icon"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-900 hover:bg-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+            title="Call"
           >
-            <Phone className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-            <span className="hidden xs:inline sm:inline">Call</span>
-            <span className="xs:hidden sm:hidden">📞</span>
+            <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
           </Button>
-          
+
+          {/* Email Button */}
           <Button
             onClick={handleEmail}
-            className="flex-1 min-w-0 sm:min-w-[120px] bg-blue-900 hover:bg-blue-800 text-white text-xs sm:text-base py-1.5 sm:py-3 h-8 sm:h-auto"
+            size="icon"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-900 hover:bg-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+            title="Email"
           >
-            <Mail className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-            <span className="hidden xs:inline sm:inline">Email</span>
-            <span className="xs:hidden sm:hidden">✉️</span>
+            <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
           </Button>
-          
+
+          {/* Download Button */}
           <Button
             onClick={handleDownload}
+            size="icon"
             variant="outline"
-            className="flex-1 min-w-0 sm:min-w-[120px] border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white text-xs sm:text-base py-1.5 sm:py-3 h-8 sm:h-auto"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+            title="Download PDF"
           >
-            <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-            <span className="hidden xs:inline sm:inline">Download</span>
-            <span className="xs:hidden sm:hidden">⬇️</span>
+            <Download className="w-4 h-4 sm:w-5 sm:h-5" />
           </Button>
-          
+
+          {/* Share Button */}
           <Button
             onClick={handleShare}
+            size="icon"
             variant="outline"
-            className="flex-1 min-w-0 sm:min-w-[120px] border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white text-xs sm:text-base py-1.5 sm:py-3 h-8 sm:h-auto"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+            title="Share"
           >
-            <Share2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-            <span className="hidden xs:inline sm:inline">Share</span>
-            <span className="xs:hidden sm:hidden">📤</span>
+            <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
           </Button>
         </div>
       </div>

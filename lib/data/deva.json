@@ -1,0 +1,783 @@
+{
+  "metadata": {
+    "name": "deva",
+    "created": "2025-07-20T06:11:16.827Z",
+    "version": "1.0"
+  },
+  "collections": {
+    "teammembers": [
+      {
+        "id": "mdba97hdzwfyhbifyaq",
+        "name": "Aakasmik Ghimire",
+        "role": "Founder/MD",
+        "image": "https://api.dicebear.com/7.x/notionists/svg?seed=Aakasmik&backgroundColor=f3f4f6&clothingColor=1f2937",
+        "bio": "Visionary leader with 15+ years in IT strategy and business transformation. Drives innovation and excellence across all operations.",
+        "skills": [
+          "React.js",
+          "Node.js",
+          "Next.js",
+          "PostgreSQL",
+          "Leadership",
+          "React Native"
+        ],
+        "email": "akasmikghimire353@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/aakasmik-ghimire-1234b9264/"
+      },
+      {
+        "id": "mdba98za3j6qmd2gjqx",
+        "name": "Kushal Poudel",
+        "role": "Founder/President",
+        "image": "https://api.dicebear.com/7.x/notionists/svg?seed=Kushal&backgroundColor=f9fafb&clothingColor=374151",
+        "bio": "Kushal Poudel is an emerging professional in the fields of IT and real estate, combining strong academic knowledge in computer networking and cybersecurity with practical business experience. Starting his journey as a real estate broker, he quickly expanded his ventures, founding Devalaya Infosys to deliver innovative IT solutions. His multidisciplinary background enables him to approach projects with strategic insight, blending technical expertise with market-driven thinking to build reliable, secure, and scalable systems.",
+        "skills": [
+          "IT-Infrastruture management",
+          "Business Development & Client Relations",
+          "Leadership",
+          "Web Development & App Development"
+        ],
+        "email": "kushalpoudel2000@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/kushal-poudel-96a50a236/"
+      },
+      {
+        "id": "mdba9ak63tq4vig47y",
+        "name": "Apshana Sapkota",
+        "role": "SEO Lead",
+        "image": "https://api.dicebear.com/7.x/notionists/svg?seed=ApshanaFemale&backgroundColor=fef7cd&clothingColor=1e40af",
+        "bio": "Experienced SEO lead specializing in technical SEO, content optimization, and data-driven strategies to boost organic growth and online visibility.",
+        "skills": [
+          "Technical SEO",
+          "Strategic Keyword Research",
+          "Optimization",
+          "Leadership",
+          "Data-Driven Analysis"
+        ],
+        "email": "sapkotaapshana52@gmail.com",
+        "linkedin": "#"
+      },
+      {
+        "id": "mdba9c523zmrw2ctrw5",
+        "name": "Avash Shrestha",
+        "role": "Cyber Security Engineer",
+        "image": "https://api.dicebear.com/7.x/notionists/svg?seed=Avash&backgroundColor=f0f9ff&clothingColor=0c4a6e",
+        "bio": "Skilled blue team cybersecurity engineer specializing in defensive security, threat monitoring, and incident response. Experienced in SIEM analysis, intrusion detection, and securing networks against evolving cyber threats.",
+        "skills": [
+          "Linux",
+          "Pentesting",
+          "Python",
+          "AWS",
+          "DevOps"
+        ],
+        "email": "shresthaavash43@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/avash-shrestha-77983420a/"
+      },
+      {
+        "id": "mdba9dpxze6qpoec27h",
+        "name": "Janak Devkota",
+        "role": "Full-Stack Developer",
+        "image": "https://api.dicebear.com/7.x/notionists/svg?seed=JanakBoy&backgroundColor=e0f2fe&clothingColor=1e3a8a",
+        "bio": "Proficient Next.js developer with expertise in building high-performance, SEO-friendly web applications. Skilled in React, server-side rendering, API integration, and creating scalable frontend architectures for seamless user experiences.",
+        "skills": [
+          "Next.js",
+          "ASP.NET",
+          "React.js",
+          "AI Integration",
+          "MongoDB",
+          "DevOps"
+        ],
+        "email": "janakdevkota@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/janak-devkota-5a7679236/"
+      }
+    ],
+    "contactinfo": [
+      {
+        "id": "mdbbr41b1lwdr2s9r9x",
+        "address": {
+          "line1": "City Square Mall",
+          "line2": "P8P9+549, सामाखुसी चक्रपथ ट्राक उत्तर",
+          "city": "Kathmandu",
+          "postalCode": "44600",
+          "country": "Nepal",
+          "mapUrl": "https://maps.app.goo.gl/Ld9Eo9Eo9Eo9Eo9E6",
+          "embedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.2608206374707!2d85.31292287549955!3d27.71646797619861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb190a74aa1f23%3A0x74ebef82ad0a0fee!2sCity%20Square%20Mall!5e0!3m2!1sen!2sus!4v1718017842037!5m2!1sen!2sus"
+        },
+        "phone": "+977 976-3373393",
+        "email": "info.devalayainfosys@gmail.com",
+        "website": {
+          "url": "https://citysquare.com.np",
+          "display": "citysquare.com.np"
+        },
+        "hours": {
+          "status": "Open",
+          "closing": "Closes 9 PM"
+        },
+        "socialMedia": [
+          {
+            "icon": "Linkedin",
+            "url": "#"
+          },
+          {
+            "icon": "Twitter",
+            "url": "#"
+          },
+          {
+            "icon": "Facebook",
+            "url": "#"
+          },
+          {
+            "icon": "Instagram",
+            "url": "#"
+          }
+        ],
+        "mapEmbed": {
+          "src": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.2608206374707!2d85.31292287549955!3d27.71646797619861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb190a74aa1f23%3A0x74ebef82ad0a0fee!2sCity%20Square%20Mall!5e0!3m2!1sen!2sus!4v1718017842037!5m2!1sen!2sus",
+          "locationName": "Devalaya Infosys",
+          "directionsUrl": "https://www.google.com/maps/dir/?api=1&destination=City+Square+Mall+Kathmandu+Nepal&destination_place_id=ChIJI_qkdKMZ6zkRjg-gp-L4Tgc"
+        }
+      }
+    ],
+    "companyvalues": [
+      {
+        "id": "mdbpaw01dtpmng473ih",
+        "icon": "Target",
+        "title": "Innovation",
+        "description": "We constantly push boundaries and explore cutting-edge technologies to deliver breakthrough solutions."
+      },
+      {
+        "id": "mdbpaxd66u3yi9atdy",
+        "icon": "Award",
+        "title": "Excellence",
+        "description": "Quality is at the heart of everything we do. We strive for perfection in every project and interaction."
+      },
+      {
+        "id": "mdbpayoc95jcb53h8k",
+        "icon": "Users",
+        "title": "Collaboration",
+        "description": "We believe in the power of teamwork and partnership, working closely with clients to achieve shared success."
+      }
+    ],
+    "companystats": [
+      {
+        "id": "mdbper9ckkmdrkgsbp8",
+        "icon": "Clock",
+        "value": "12+",
+        "label": "Years Experience"
+      },
+      {
+        "id": "mdbpesrd5cm5xytgz1i",
+        "icon": "Target",
+        "value": "150+",
+        "label": "Projects Delivered"
+      },
+      {
+        "id": "mdbpeugugdlzsue2vlb",
+        "icon": "Users",
+        "value": "75+",
+        "label": "Happy Clients"
+      },
+      {
+        "id": "mdbpew3fi6q3709t8v",
+        "icon": "Award",
+        "value": "24/7",
+        "label": "Support"
+      }
+    ],
+    "contacthero": [
+      {
+        "id": "mdbphvvu6cns0ash7ox",
+        "icon": "HeartHandshake",
+        "subtitle": "Get In Touch",
+        "title": "Contact Us",
+        "description": "Have a question or want to work together? We'd love to hear from you!"
+      }
+    ],
+    "abouthero": [
+      {
+        "id": "mdbppczf7bup042f5y2",
+        "icon": "Sparkles",
+        "subtitle": "Discover Our Story",
+        "title": "About Us",
+        "description": "We are passionate technologists dedicated to transforming businesses through innovative IT solutions."
+      }
+    ],
+    "companystory": [
+      {
+        "id": "mdbprblvmo34wainnmr",
+        "subtitle": "Our Timeline",
+        "title": "Our Journey",
+        "paragraphs": [
+          "Founded with a vision to bridge the gap between technology and business success, DEVALAYA INFOSYS has been at the forefront of digital transformation for over a decade.",
+          "We combine deep technical expertise with business acumen to deliver solutions that not only meet today's needs but also prepare our clients for tomorrow's challenges.",
+          "From startups to enterprise clients, we've helped organizations across industries leverage technology to achieve their goals and drive sustainable growth."
+        ]
+      }
+    ],
+    "bloghero": [
+      {
+        "id": "mdbptg2d48l3qxqla7v",
+        "icon": "BookOpen",
+        "subtitle": "Insights & Updates",
+        "title": "Our Blog",
+        "description": "Stay updated with the latest news, insights, and updates from Devalaya Infosys"
+      }
+    ],
+    "careerhero": [
+      {
+        "id": "mdbpypa1de2cmg9djrh",
+        "icon": "Briefcase",
+        "subtitle": "Join Our Team",
+        "title": "Career Opportunities",
+        "description": "Join our team and be part of something extraordinary"
+      }
+    ],
+    "projectshero": [
+      {
+        "id": "mdbpyxmsdvl3vy3t185",
+        "icon": "Code",
+        "subtitle": "Our Work",
+        "title": "Projects",
+        "description": "Explore our portfolio of innovative solutions that have helped businesses transform and grow"
+      }
+    ],
+    "projects": [
+      {
+        "id": "mdbpyz3au7gy65e69g",
+        "title": "HealthConnect Platform",
+        "category": "Healthcare",
+        "image": "/placeholder.svg?height=600&width=800",
+        "description": "A comprehensive telemedicine platform connecting patients with healthcare providers through secure video consultations, appointment scheduling, and electronic health records management.",
+        "technologies": [
+          "React",
+          "Node.js",
+          "MongoDB",
+          "WebRTC",
+          "AWS"
+        ],
+        "icon": "Globe",
+        "client": "National Health Services",
+        "duration": "8 months",
+        "year": "2023",
+        "featured": true,
+        "link": "#"
+      },
+      {
+        "id": "mdbpz1offie1l2bw7qa",
+        "title": "FinTrack Analytics",
+        "category": "Finance",
+        "image": "/placeholder.svg?height=600&width=800",
+        "description": "Advanced financial analytics platform with real-time data processing, predictive modeling, and interactive dashboards for investment insights and portfolio management.",
+        "technologies": [
+          "Python",
+          "TensorFlow",
+          "React",
+          "PostgreSQL",
+          "Docker"
+        ],
+        "icon": "Database",
+        "client": "Global Investment Corp",
+        "duration": "12 months",
+        "year": "2022",
+        "featured": true,
+        "link": "#"
+      },
+      {
+        "id": "mdbpz3ft8h3bgrfoo84",
+        "title": "SmartRetail POS",
+        "category": "Retail",
+        "image": "/placeholder.svg?height=600&width=800",
+        "description": "Modern point-of-sale system with inventory management, customer loyalty programs, and sales analytics designed for multi-location retail businesses.",
+        "technologies": [
+          "Angular",
+          "Java Spring",
+          "MySQL",
+          "Kubernetes"
+        ],
+        "icon": "Cpu",
+        "client": "RetailChain Inc.",
+        "duration": "6 months",
+        "year": "2023",
+        "featured": true,
+        "link": "#"
+      },
+      {
+        "id": "mdbpz4syde2t2sbrn2",
+        "title": "SecureVault",
+        "category": "Cybersecurity",
+        "image": "/placeholder.svg?height=600&width=800",
+        "description": "Enterprise-grade security solution providing end-to-end encryption, threat detection, and compliance monitoring for sensitive data protection.",
+        "technologies": [
+          "Go",
+          "Rust",
+          "Blockchain",
+          "AI/ML"
+        ],
+        "icon": "Shield",
+        "client": "Financial Services Group",
+        "duration": "10 months",
+        "year": "2022",
+        "featured": false,
+        "link": "#"
+      },
+      {
+        "id": "mdbpz73pke99vhil5cb",
+        "title": "EduLearn LMS",
+        "category": "Education",
+        "image": "/placeholder.svg?height=600&width=800",
+        "description": "Comprehensive learning management system with interactive course content, progress tracking, assessment tools, and virtual classroom capabilities.",
+        "technologies": [
+          "Vue.js",
+          "Django",
+          "PostgreSQL",
+          "AWS"
+        ],
+        "icon": "Code",
+        "client": "International Education Institute",
+        "duration": "9 months",
+        "year": "2021",
+        "featured": false,
+        "link": "#"
+      },
+      {
+        "id": "mdbpzb59b9c47rc1gmh",
+        "title": "LogiTrack",
+        "category": "Logistics",
+        "image": "/placeholder.svg?height=600&width=800",
+        "description": "Real-time logistics and supply chain management platform with GPS tracking, route optimization, inventory management, and predictive analytics.",
+        "technologies": [
+          "React Native",
+          "Node.js",
+          "MongoDB",
+          "Google Maps API"
+        ],
+        "icon": "Globe",
+        "client": "Global Shipping Corporation",
+        "duration": "7 months",
+        "year": "2021",
+        "featured": false,
+        "link": "#"
+      }
+    ],
+    "services": [
+      {
+        "id": "mdbq6kfmzjizkif3cc",
+        "icon": "Code",
+        "title": "Web Development",
+        "slug": "web-development",
+        "description": "Custom web applications built with modern frameworks and responsive design principles to deliver exceptional user experiences.",
+        "features": [
+          "Responsive design for all devices",
+          "Progressive Web Apps (PWA)",
+          "E-commerce solutions",
+          "Content Management Systems"
+        ],
+        "technologies": [
+          "React",
+          "Next.js",
+          "Node.js",
+          "TypeScript",
+          "Tailwind CSS"
+        ]
+      },
+      {
+        "id": "mdbq6nqbhvpe35iwpb",
+        "icon": "Database",
+        "title": "Database Solutions",
+        "slug": "database-solutions",
+        "description": "Robust database design, optimization, and management services to ensure your data is secure, accessible, and scalable.",
+        "features": [
+          "Database architecture design",
+          "Performance optimization",
+          "Data migration services",
+          "Backup and recovery solutions"
+        ],
+        "technologies": [
+          "MongoDB",
+          "PostgreSQL",
+          "MySQL",
+          "Redis",
+          "Firebase"
+        ]
+      },
+      {
+        "id": "mdbq6qie1ozc911tk8",
+        "icon": "Shield",
+        "title": "Cybersecurity",
+        "slug": "cybersecurity",
+        "description": "Comprehensive security solutions to protect your digital assets from threats and ensure compliance with industry standards.",
+        "features": [
+          "Security audits and assessments",
+          "Penetration testing",
+          "Secure coding practices",
+          "Compliance consulting (GDPR, HIPAA)"
+        ],
+        "technologies": [
+          "Encryption",
+          "Firewall Configuration",
+          "Identity Management",
+          "Threat Detection"
+        ]
+      },
+      {
+        "id": "mdbq6s5mx1suvvtuovg",
+        "icon": "Cpu",
+        "title": "AI Integration",
+        "slug": "ai-integration",
+        "description": "Leverage the power of artificial intelligence to automate processes, gain insights, and create intelligent applications.",
+        "features": [
+          "Machine learning models",
+          "Natural language processing",
+          "Computer vision solutions",
+          "Predictive analytics"
+        ],
+        "technologies": [
+          "TensorFlow",
+          "PyTorch",
+          "OpenAI API",
+          "Hugging Face",
+          "scikit-learn"
+        ]
+      },
+      {
+        "id": "mdbq6uodoc4x4qrht0h",
+        "icon": "Globe",
+        "title": "Digital Marketing",
+        "slug": "digital-marketing",
+        "description": "Strategic digital marketing services to increase your online presence, drive traffic, and convert visitors into customers.",
+        "features": [
+          "SEO optimization",
+          "Content marketing",
+          "Social media management",
+          "Analytics and reporting"
+        ],
+        "technologies": [
+          "Google Analytics",
+          "SEMrush",
+          "HubSpot",
+          "Mailchimp",
+          "Meta Business Suite"
+        ]
+      },
+      {
+        "id": "mdbq6w4thl8yommm37f",
+        "icon": "Zap",
+        "title": "IT Consulting",
+        "slug": "it-consulting",
+        "description": "Expert guidance on technology strategy, digital transformation, and IT infrastructure to align with your business goals.",
+        "features": [
+          "Technology roadmap planning",
+          "Digital transformation strategy",
+          "IT infrastructure assessment",
+          "Vendor selection assistance"
+        ],
+        "technologies": [
+          "Business Analysis",
+          "Project Management",
+          "Risk Assessment",
+          "ROI Analysis"
+        ]
+      },
+      {
+        "id": "mdbq6y5qqjufgymjtc",
+        "icon": "BarChart",
+        "title": "Data Analytics",
+        "slug": "data-analytics",
+        "description": "Transform raw data into actionable insights with our comprehensive data analytics and visualization services.",
+        "features": [
+          "Business intelligence dashboards",
+          "Data visualization",
+          "Big data processing",
+          "Custom reporting solutions"
+        ],
+        "technologies": [
+          "Power BI",
+          "Tableau",
+          "Python",
+          "R",
+          "Apache Spark"
+        ]
+      },
+      {
+        "id": "mdbq6zrpg5bfv9qaoud",
+        "icon": "Layers",
+        "title": "UI/UX Design",
+        "slug": "ui-ux-design",
+        "description": "Create intuitive, engaging user experiences with our user-centered design approach and attention to detail.",
+        "features": [
+          "User  research and testing",
+          "Wireframing and prototyping",
+          "Visual design",
+          "Interaction design"
+        ],
+        "technologies": [
+          "Figma",
+          "Adobe XD",
+          "Sketch",
+          "InVision",
+          "Zeplin"
+        ]
+      },
+      {
+        "id": "mdbq710pjat92zco66c",
+        "icon": "Smartphone",
+        "title": "Mobile App Development",
+        "slug": "mobile-app-development",
+        "description": "Native and cross-platform mobile applications that deliver seamless experiences across all devices.",
+        "features": [
+          "iOS and Android development",
+          "Cross-platform solutions",
+          "App store optimization",
+          "Maintenance and updates"
+        ],
+        "technologies": [
+          "React Native",
+          "Flutter",
+          "Swift",
+          "Kotlin",
+          "Firebase"
+        ]
+      },
+      {
+        "id": "mdbq735uxlbc3tulbtd",
+        "icon": "Cloud",
+        "title": "Cloud Services",
+        "slug": "cloud-services",
+        "description": "Migrate, optimize, and manage your applications in the cloud for improved scalability, reliability, and cost-efficiency.",
+        "features": [
+          "Cloud migration",
+          "Infrastructure as Code",
+          "Serverless architecture",
+          "Cost optimization"
+        ],
+        "technologies": [
+          "AWS",
+          "Azure",
+          "Google Cloud",
+          "Docker",
+          "Kubernetes"
+        ]
+      },
+      {
+        "id": "mdbq78anig2svov9xq",
+        "icon": "Server",
+        "title": "DevOps Solutions",
+        "slug": "devops-solutions",
+        "description": "Streamline your development and operations with automated workflows, continuous integration, and deployment pipelines.",
+        "features": [
+          "CI/CD pipeline setup",
+          "Infrastructure automation",
+          "Monitoring and logging",
+          "Containerization"
+        ],
+        "technologies": [
+          "Jenkins",
+          "GitHub Actions",
+          "Terraform",
+          "Ansible",
+          "Prometheus"
+        ]
+      },
+      {
+        "id": "mdbq7aztadxg7ljqnu",
+        "icon": "Headphones",
+        "title": "IT Support",
+        "slug": "it-support",
+        "description": "Reliable technical support services to keep your systems running smoothly and resolve issues quickly.",
+        "features": [
+          "24/7 helpdesk support",
+          "Remote troubleshooting",
+          "System maintenance",
+          "User  training"
+        ],
+        "technologies": [
+          "Remote Desktop",
+          "Ticketing Systems",
+          "Network Monitoring",
+          "Backup Solutions"
+        ]
+      }
+    ],
+    "servicecategories": [
+      {
+        "id": "mdbq7epw8jzhs87d56",
+        "value": "all",
+        "label": "All Services"
+      },
+      {
+        "id": "mdbq7fyj6n5o1xm5e2j",
+        "value": "web",
+        "label": "Web Development"
+      },
+      {
+        "id": "mdbq7ifqr2fqq7eu5d",
+        "value": "mobile",
+        "label": "Mobile Development"
+      },
+      {
+        "id": "mdbq7p5443p7hj56ubm",
+        "value": "data",
+        "label": "Data & Analytics"
+      },
+      {
+        "id": "mdbq7qi3ai5x3boe0lg",
+        "value": "cloud",
+        "label": "Cloud & DevOps"
+      },
+      {
+        "id": "mdbq7si2wtrfrirs4cq",
+        "value": "security",
+        "label": "Security"
+      },
+      {
+        "id": "mdbq7tywu2p03idfo6b",
+        "value": "consulting",
+        "label": "Consulting"
+      }
+    ],
+    "servicetestimonials": [
+      {
+        "id": "mdbq7v8fl3bogi0uxop",
+        "name": "Sarah Johnson",
+        "role": "CTO, HealthTech Inc.",
+        "image": "/placeholder-user.jpg",
+        "testimonial": "The web application Devalaya Infosys built for us has transformed our patient management process. Their attention to detail and technical expertise is outstanding.",
+        "service": "Web Development"
+      },
+      {
+        "id": "mdbq7wml0bztdv97348p",
+        "name": "Michael Chen",
+        "role": "CEO, RetailPlus",
+        "image": "/placeholder-user.jpg",
+        "testimonial": "Their mobile app development team delivered a solution that exceeded our expectations. Our customers love the new shopping experience.",
+        "service": "Mobile App Development"
+      },
+      {
+        "id": "mdbq7y20ad9v75oa82d",
+        "name": "Priya Patel",
+        "role": "Data Director, FinServe",
+        "image": "/placeholder-user.jpg",
+        "testimonial": "The data analytics dashboard they created has given us insights we never had before. It's completely changed how we make business decisions.",
+        "service": "Data Analytics"
+      },
+      {
+        "id": "mdbq7zu6ia6in10bfj",
+        "name": "Priya Patel",
+        "role": "Data Director, FinServe",
+        "image": "/placeholder-user.jpg",
+        "testimonial": "The data analytics dashboard they created has given us insights we never had before. It's completely changed how we make business decisions.",
+        "service": "Data Analytics"
+      },
+      {
+        "id": "mdbq81dnhldck46a8hh",
+        "name": "Priya Patel",
+        "role": "Data Director, FinServe",
+        "image": "/placeholder-user.jpg",
+        "testimonial": "The data analytics dashboard they created has given us insights we never had before. It's completely changed how we make business decisions.",
+        "service": "Data Analytics"
+      }
+    ],
+    "serviceprocess": [
+      {
+        "id": "mdbq83bwu0iyo41ukps",
+        "number": "01",
+        "title": "Discovery",
+        "description": "We begin by understanding your business goals, challenges, and requirements through in-depth consultations."
+      },
+      {
+        "id": "mdbq84urtndobclvqoh",
+        "number": "02",
+        "title": "Strategy",
+        "description": "Our team develops a comprehensive strategy and roadmap tailored to your specific needs and objectives."
+      },
+      {
+        "id": "mdbq89h5lmg35vtf789",
+        "number": "03",
+        "title": "Design",
+        "description": "We create detailed designs and prototypes, ensuring alignment with your brand and user expectations."
+      },
+      {
+        "id": "mdbq8arknwia3o92vas",
+        "number": "04",
+        "title": "Development",
+        "description": "Our expert developers build your solution using the latest technologies and best practices."
+      },
+      {
+        "id": "mdbq8dgbiyuuhse03fs",
+        "number": "05",
+        "title": "Testing",
+        "description": "Rigorous quality assurance testing ensures your solution is robust, secure, and performs optimally."
+      },
+      {
+        "id": "mdbq8idvv8palj974q",
+        "number": "06",
+        "title": "Deployment",
+        "description": "We handle the seamless deployment of your solution, ensuring a smooth transition to production."
+      },
+      {
+        "id": "mdbq8li3a0uqp0tz4i6",
+        "number": "07",
+        "title": "Support",
+        "description": "Our relationship continues with ongoing support, maintenance, and optimization services."
+      }
+    ],
+    "websitetemplates": [
+      {
+        "id": "mdee2ziloo5rnwb64ys",
+        "title": "Business Template",
+        "description": "Perfect for corporate and professional services",
+        "image": "https://i.pinimg.com/736x/0a/15/90/0a159072d8b81e4512ee16edae7f21e7.jpg",
+        "demoUrl": "https://example.com/demos/business-template",
+        "tags": [
+          "Corporate",
+          "Professional",
+          "Responsive"
+        ],
+        "features": [
+          "Responsive design",
+          "Contact forms",
+          "Team profiles",
+          "Service showcases",
+          "Testimonial sections"
+        ],
+        "price": "$99",
+        "category": "Business",
+        "iconName": "Briefcase"
+      },
+      {
+        "id": "mdee30go63flbpd8mq",
+        "title": "E-commerce Template",
+        "description": "Fully-featured online store solution",
+        "image": "https://cozythemes.com/wp-content/uploads/2025/06/ecommerce-website-templates-2-1024x614.webp",
+        "demoUrl": "https://example.com/demos/ecommerce-template",
+        "tags": [
+          "E-commerce",
+          "Shop",
+          "Store"
+        ],
+        "features": [
+          "Product catalog",
+          "Shopping cart",
+          "Secure checkout",
+          "Customer accounts",
+          "Order tracking"
+        ],
+        "price": "$149",
+        "category": "E-commerce",
+        "iconName": "ShoppingCart"
+      }
+    ],
+    "adsdata": [
+      {
+        "_id": "ads_005",
+        "imgUrl": "https://t3.ftcdn.net/jpg/07/03/29/90/360_F_703299039_e5C5705RGGPPV5NPWNYDQhfJ24UHreQt.jpg",
+        "isVisible": false,
+        "desc": "Special offer: 30% off on all courses this month! Limited time offer for aspiring developers."
+      },
+      {
+        "id": "mdr3k8ifw9kris7tbhi",
+        "_id": "ads_006",
+        "imgUrl": "https://devalaya-infosys.s3.eu-north-1.amazonaws.com/devalaya-ad.jpg",
+        "isVisible": true,
+        "desc": "Use code DEVALAYA25 for 25% off – only for the first 20 students!"
+      }
+    ]
+  }
+}
