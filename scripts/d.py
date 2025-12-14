@@ -116,7 +116,7 @@ def main():
     infosys_dir = os.path.dirname(current_dir)
     
     # Output directory
-    output_dir = r'C:\Users\janak\Desktop\Devalaya\Production'
+    output_dir = r'C:\Users\revDev\Desktop\Daily\Devalaya\Production'
     
     # Items to copy
     items_to_copy = ['.next', 'public', 'server.js', 'package.json', 'node_modules']

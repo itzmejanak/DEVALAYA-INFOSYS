@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -13,9 +10,8 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
   },
-  // Disable standalone output for local builds to avoid Windows symlink permission issues
-  // Vercel will handle this automatically in production
-  output: 'standalone',
+  // Note: 'output: standalone' removed - causes Windows symlink permission errors (EPERM)
+  // Vercel will handle standalone output automatically in production
   // Configure how Next.js handles external data fetching during build
   // This helps with MongoDB connections during build
   serverExternalPackages: ['mongoose'],
